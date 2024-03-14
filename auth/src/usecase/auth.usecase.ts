@@ -54,16 +54,18 @@ class AuthUsecase implements IAuthUsecase {
           throw new Error("Invalid activation code");
         }
   
-        const { username , email, password } = newUser.user;
+        const { fullname ,username , email, password , role } = newUser.user;
   
         const existingUser = await this.getUserByEmail(email);
         if (existingUser) {
           throw new Error("User already exist");
         }
         const user = await this.createUser({
+          fullname,
           username,
           email,
           password,
+          role,
         } as IAuth);
       } catch (error) {
         throw error;
@@ -115,7 +117,7 @@ class AuthUsecase implements IAuthUsecase {
     public async createUser(data: IAuth) {
       try {
         const user = await this.authRepository.create(data);
-        if (!user) throw new Error("User not created");
+        // if (!user) throw new Error("User not created");
         // publish user create event
         // await this.eventPublisher.publish(
         //   Exchanges.USER_EXCHANGE,

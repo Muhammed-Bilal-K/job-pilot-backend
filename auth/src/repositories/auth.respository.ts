@@ -8,7 +8,16 @@ class AuthRepository implements IAuthRepository {
 
   public async create(data : IAuth) : Promise<IAuth | null> {
     try {
-      const user = await authModel.create(data);
+      const user = new authModel({
+        fullname:data.fullname,
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        role:data.role,
+      });
+      await user.save();
+      console.log(user,'from mogondb');
+      
       return user;
     } catch (error) {
       throw error;

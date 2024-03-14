@@ -4,7 +4,8 @@ interface Auth{
     username:string,
     email:string,
     password?:string,
-    isBlock: boolean;
+    role:string,
+    isBlock?: boolean,
     credentials?:string
 }
 
