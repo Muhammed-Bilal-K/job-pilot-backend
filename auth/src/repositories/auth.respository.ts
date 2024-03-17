@@ -8,6 +8,8 @@ class AuthRepository implements IAuthRepository {
 
   public async create(data : IAuth) : Promise<IAuth | null> {
     try {
+      console.log(data, 'from mogono');
+      
       const user = new authModel({
         fullname:data.fullname,
         username: data.username,
@@ -19,6 +21,7 @@ class AuthRepository implements IAuthRepository {
       console.log(user,'from mogondb');
       
       return user;
+      // return null;
     } catch (error) {
       throw error;
     }

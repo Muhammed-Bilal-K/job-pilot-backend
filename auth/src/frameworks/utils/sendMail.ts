@@ -17,7 +17,7 @@ const sendMail = async (options: EmailOptions): Promise<void> => {
     service: process.env.SMTP_SERVICE,
     auth: {
       user: process.env.SMTP_MAIL,
-      pass: "nfqa qlrp fyxs pzky",
+      pass: process.env.SMTP_PASS,
     },
   });
   const { email, subject, template, data } = options;

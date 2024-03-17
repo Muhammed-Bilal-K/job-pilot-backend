@@ -1,3 +1,4 @@
+import sendMail from "../frameworks/utils/sendMail";
 import {
   IActivationRequest,
     ILoginRequest,
@@ -39,17 +40,29 @@ class AuthUsecase implements IAuthUsecase {
 
         const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
         const token = await this.jwt.createActivationCode(user, activationCode);
-        // const data = { user: { name: user.fullname }, activationCode };
+        const data = { user: { name: user.fullname }, activationCode };
         console.log(activationCode);
 
-        const activationToken = token.token;
-        return activationToken;
-        
+        try {
+          await sendMail({
+            email: user.email,
+            subject: "Account Activation",
+            template: "activation-mail.ejs",
+            data,
+          });
+          const activationToken = token.token;
+          return activationToken;
+        } catch (error) {
+          throw error;
+        }
     }
 
     public async activateUser(data: IActivationRequest) {
       try {
+        console.log(data, 'from data active');
+        
         const newUser = await this.jwt.verifyActivationCode(data);
+        console.log(newUser, 'from active functions');
         if (newUser.activationCode !== data.activation_code) {
           throw new Error("Invalid activation code");
         }
@@ -80,16 +93,16 @@ class AuthUsecase implements IAuthUsecase {
         if (user?.isBlock) {
           throw new Error("You are blocked by admin");
         }
-        const isPasswordMatched = await this.compareUserPassword(
-          data.email,
-          data.password
-        );
+        // const isPasswordMatched = await this.compareUserPassword(
+        //   data.email,
+        //   data.password
+        // );
     
-        if (!isPasswordMatched) {
-          throw new Error("Invalid email or password");
-        }
-        // const token = await this.jwt.createToken(user);
-        // return token;
+        // if (!isPasswordMatched) {
+        //   throw new Error("Invalid email or password");
+        // }
+        const token = await this.jwt.createToken(user);
+        return token;
     }
 
     public async compareUserPassword(email: string, password: string) {

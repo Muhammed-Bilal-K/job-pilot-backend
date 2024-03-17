@@ -13,11 +13,11 @@ app.use(express.json({ limit: "50mb" }));
 // cookie parser
 app.use(cookieParser());
 
-// app.use(cors({
-//   origin: 'https://localhost:5173',
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: 'https://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));
 
 // morgan for logging in console
 app.use(morgan("dev"));

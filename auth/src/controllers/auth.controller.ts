@@ -26,6 +26,7 @@ class AuthController {
 
   public async activateUser(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log(req.body, 'from active');
       await this.authUsecase.activateUser(req.body);
 
       res.status(201).json({

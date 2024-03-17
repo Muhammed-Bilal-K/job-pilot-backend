@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Pilot - Welcome Email</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .title{
+            color:#0c2645;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to <span class="title">Job Pilot</span>!</h1>
+        <p>Hello <%= user.name %>,</p>
+        <p>Thank you for joining our Job-Pilot.</p>
+        <h1> OTP <%= activationCode %> </h1>
+        <p>With Job-Pilot, you can access a wide range of jobs.</p>
+        <p>If you have any questions or need assistance, don't hesitate to reach out to our support team. We're here to help you succeed.</p>
+        <p>Get started today!</p>
+        <p>Best regards,</p>
+        <p>Job Pilot</p>
+        <p>Contact us jobpilotdotcom@gmail.com</p>
+    </div>
+</body>
+</html>
