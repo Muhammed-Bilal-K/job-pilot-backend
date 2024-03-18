@@ -3,6 +3,8 @@ import {
   IActivationRequest,
     ILoginRequest,
     IRegisterRequest,
+    IRequestEmail,
+    InputPass,
   } from "../interfaces/auth.interface";
 import JwtService from "../frameworks/utils/jwt";
 import IAuth from '../entities/auth';
@@ -21,6 +23,7 @@ class AuthUsecase implements IAuthUsecase {
     }
 
     public async register(userData : IRegisterRequest){
+      console.log(userData,'from register')      
         if (userData.password !== userData.confirmpassword) {
             throw new Error("Password not match");
         }
@@ -105,6 +108,20 @@ class AuthUsecase implements IAuthUsecase {
         return token;
     }
 
+    public async UserByEmail(data : IRequestEmail){
+      try {
+
+        const existEmail  = await this.getUserByEmail(data.email);
+        if (!existEmail) {
+          throw new Error("User not found");
+        }
+
+        return existEmail;
+      } catch (error) {
+        throw error
+      }
+    }
+
     public async compareUserPassword(email: string, password: string) {
         try {
           const isPasswordMatched =
@@ -148,6 +165,17 @@ class AuthUsecase implements IAuthUsecase {
       } catch (error) {
         throw error;
       }
+    }
+
+    public async UpdatePassByEmail(data :InputPass){
+        
+      const existEmail  = await this.getUserByEmail(data.email);
+      if (!existEmail) {
+        throw new Error("User not found");
+      }
+
+      const user = await this.authRepository.update(existEmail.email,data.npassword);
+      return user;
     }
 }
 

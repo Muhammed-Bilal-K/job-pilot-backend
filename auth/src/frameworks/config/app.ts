@@ -3,7 +3,6 @@ import express, { NextFunction, Request, Response } from "express";
 export const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import morgan from "morgan";
 import authRouter from "../routes/auth.route";
 dotenv.config();
 // import { ErrorMiddleware } from "@s7abab/common";
@@ -13,14 +12,16 @@ app.use(express.json({ limit: "50mb" }));
 // cookie parser
 app.use(cookieParser());
 
-app.use(cors({
-  origin: 'https://localhost:5173',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: "GET, POST, OPTIONS, PATCH, PUT",
   credentials: true,
-}));
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 
 // morgan for logging in console
-app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 
 // routes

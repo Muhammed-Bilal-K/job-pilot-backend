@@ -28,4 +28,13 @@ router.post("/login", (req: Request, res: Response, next: NextFunction) =>
   authController.login(req, res, next)  
 );
 
+router.post("/forget-password", (req: Request, res: Response, next: NextFunction) =>
+  authController.UserByEmail(req, res, next)  
+);
+
+router.post("/update-password", (req: Request, res: Response, next: NextFunction) =>
+  authController.UpdatePassByEmail(req, res, next)  
+  
+);
+
 export default router;

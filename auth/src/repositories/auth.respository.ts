@@ -30,7 +30,9 @@ class AuthRepository implements IAuthRepository {
   public async findByEmail(email: string): Promise<IAuth | null> {
     try {
       const user = await authModel.findOne({ email });
-
+      if (!user) {
+        throw new Error("IUser not found");
+      }
       return user;
     } catch (error) {
       throw error;
@@ -48,6 +50,22 @@ class AuthRepository implements IAuthRepository {
     } catch (error) {
       console.log(error);
       throw error;
+    }
+  }
+
+  public async update(email : string , npassword : string){
+    try {
+      const user = await authModel.findOneAndUpdate(
+            { email: email },
+            { $set: { password: npassword } },
+            { new: true }
+        );
+        if (!user) {
+            throw new Error("User not found");
+        }
+        return user;
+    } catch (error) {
+      throw error
     }
   }
 

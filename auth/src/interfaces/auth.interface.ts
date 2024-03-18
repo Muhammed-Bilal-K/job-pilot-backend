@@ -17,3 +17,12 @@ export interface IActivationRequest {
   activation_token: string;
   activation_code: string;
 }
+
+export interface IRequestEmail{
+  email: string;
+}
+
+export interface InputPass {
+  email : string;
+  npassword: string;
+}

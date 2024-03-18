@@ -50,6 +50,7 @@ class AuthController {
       });
       res.status(200).json({
         success: true,
+        message: "Account logined successfully",
         token: user.token,
         user: user.user,
       });
@@ -60,6 +61,39 @@ class AuthController {
     }
   }
 
+  public async UserByEmail(req: Request, res: Response, next: NextFunction) {
+    try {
+      console.log(req.body);
+      
+      const user = await this.authUsecase.UserByEmail(req.body);
+      
+      console.log(user, 'from UserByEmail');
+      
+
+      res.status(200).json({
+        success: true,
+        message: "Email Found Successfully!",
+        email: user.email,
+      });
+    } catch (error: any) {
+        console.log(error,'from auth.controller');
+    //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async UpdatePassByEmail(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await this.authUsecase.UpdatePassByEmail(req.body);
+      
+      res.status(200).json({
+        success: true,
+        message: "Password Updated Successfully!"
+      });
+    } catch (error: any) {
+        console.log(error,'from auth.controller');
+    //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
 }
 
 export default AuthController;
