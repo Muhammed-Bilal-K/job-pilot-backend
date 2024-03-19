@@ -9,7 +9,7 @@ import {
 
 interface IAuthUsecase {
   login(data: ILoginRequest): Promise<any>;
-  register(userData: IRegisterRequest): Promise<string>;
+  register(userData: IRegisterRequest): Promise<any>;
   activateUser(data: IActivationRequest): Promise<void>;
   UserByEmail(data : IRequestEmail) : Promise<Auth>;
   UpdatePassByEmail(data : InputPass) : Promise<any>;

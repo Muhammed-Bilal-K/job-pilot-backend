@@ -21,7 +21,6 @@ class AuthRepository implements IAuthRepository {
       console.log(user,'from mogondb');
       
       return user;
-      // return null;
     } catch (error) {
       throw error;
     }
@@ -30,9 +29,7 @@ class AuthRepository implements IAuthRepository {
   public async findByEmail(email: string): Promise<IAuth | null> {
     try {
       const user = await authModel.findOne({ email });
-      if (!user) {
-        throw new Error("IUser not found");
-      }
+      
       return user;
     } catch (error) {
       throw error;

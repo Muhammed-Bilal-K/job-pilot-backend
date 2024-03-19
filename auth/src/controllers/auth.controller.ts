@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import IAuthUsecase from "../interfaces/usecase/auth.usecase";
+import ErrorHandler from "../frameworks/middleware/ErrorHandler";
 
 class AuthController {
   private authUsecase: IAuthUsecase;
@@ -17,10 +18,8 @@ class AuthController {
           activationToken: token,
           message: "Otp successfully sent to your email address.",
         });
-    } catch (error) {
-      console.log(error,'from auth.controller1');
-        
-      //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error : any) {
+        return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
 
@@ -34,7 +33,7 @@ class AuthController {
         message: "Account activated successfully",
       });
     } catch (error: any) {
-      // return next(new ErrorHandler(error.message, error.statusCode || 500));
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
 
@@ -55,9 +54,7 @@ class AuthController {
         user: user.user,
       });
     } catch (error: any) {
-        console.log(error,'from auth.controller');
-        
-    //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
 
@@ -76,8 +73,7 @@ class AuthController {
         email: user.email,
       });
     } catch (error: any) {
-        console.log(error,'from auth.controller');
-    //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
 
@@ -90,8 +86,7 @@ class AuthController {
         message: "Password Updated Successfully!"
       });
     } catch (error: any) {
-        console.log(error,'from auth.controller');
-    //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
 }

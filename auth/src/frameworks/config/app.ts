@@ -4,8 +4,9 @@ export const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRouter from "../routes/auth.route";
+import { ErrorMiddleware } from '../middleware/ErrorMiddleware';
 dotenv.config();
-// import { ErrorMiddleware } from "@s7abab/common";
+
 // body parser
 app.use(express.json({ limit: "50mb" }));
 
@@ -21,7 +22,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// morgan for logging in console
 app.use(express.urlencoded({ extended: false }));
 
 // routes
@@ -35,4 +35,4 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // error middleware
-// app.use(ErrorMiddleware);
+app.use(ErrorMiddleware);

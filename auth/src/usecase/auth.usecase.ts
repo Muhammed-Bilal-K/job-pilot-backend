@@ -25,7 +25,7 @@ class AuthUsecase implements IAuthUsecase {
     public async register(userData : IRegisterRequest){
       console.log(userData,'from register')      
         if (userData.password !== userData.confirmpassword) {
-            throw new Error("Password not match");
+          throw new Error("Password not match");
         }
 
         const isEmailExist = await this.getUserByEmail(userData.email);
