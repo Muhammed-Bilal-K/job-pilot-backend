@@ -101,9 +101,10 @@ class AuthUsecase implements IAuthUsecase {
           data.password
         );
     
-        if (isPasswordMatched === false) {
+        if (!isPasswordMatched) {
           throw new Error("Invalid email or password");
         }
+        
         const token = await this.jwt.createToken(user);
         return token;
         } catch (error) {

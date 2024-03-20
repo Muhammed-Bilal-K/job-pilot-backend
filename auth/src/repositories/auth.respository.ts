@@ -9,12 +9,12 @@ class AuthRepository implements IAuthRepository {
   public async create(data : IAuth) : Promise<IAuth | null> {
     try {
       console.log('from mogono');
-      
+      const hashPassword = bcryptjs.hashSync(data.password!, 10);
       const user = new authModel({
         fullname:data.fullname,
         username: data.username,
         email: data.email,
-        password: data.password,
+        password: hashPassword,
         role:data.role,
       });
       await user.save();
@@ -42,14 +42,10 @@ class AuthRepository implements IAuthRepository {
       if (!user) {
         throw new Error("IUser not found");
       }
-      // const isPasswordMatched = bcryptjs.compareSync(password, user.password);
-      let isPasswordMatched: boolean;
-      if (password === user.password) {
-        isPasswordMatched = true;
-      }else[
-        isPasswordMatched = false,
-      ]
-      // const isPasswordMatched = password === user.password;
+      const isPasswordMatched = bcryptjs.compareSync(password, user.password);
+      if (!isPasswordMatched) {
+        throw new Error("password doesn't matched");
+      }
       
       return isPasswordMatched;
     } catch (error) {
@@ -59,9 +55,10 @@ class AuthRepository implements IAuthRepository {
 
   public async update(email : string , npassword : string){
     try {
+      const hashPassword = bcryptjs.hashSync(npassword, 10);
       const user = await authModel.findOneAndUpdate(
             { email: email },
-            { $set: { password: npassword } },
+            { $set: { password: hashPassword } },
             { new: true }
         );
         
