@@ -4,6 +4,7 @@ import {
     ILoginRequest,
     IRegisterRequest,
     IRequestEmail,
+    IResendOtp,
     InputPass,
   } from "../interfaces/auth.interface";
 import JwtService from "../frameworks/utils/jwt";
@@ -14,16 +15,17 @@ import IAuthUsecase from "../interfaces/usecase/auth.usecase";
 class AuthUsecase implements IAuthUsecase {
     private authRepository : IAuthRepository; 
     private jwt: JwtService;
+    private tuser: IRegisterRequest | null;
     constructor(
         authRepository: IAuthRepository,
         jwt: JwtService,
     ){
         this.authRepository = authRepository;
-        this.jwt = jwt
+        this.jwt = jwt;
+        this.tuser = null;
     }
 
-    public async register(userData : IRegisterRequest){
-      console.log(userData,'from register')      
+    public async register(userData : IRegisterRequest){     
         if (userData.password !== userData.confirmpassword) {
           throw new Error("Password not match");
         }
@@ -33,7 +35,7 @@ class AuthUsecase implements IAuthUsecase {
             throw new Error("User already exist");
         }
 
-        const user : IRegisterRequest = {
+        this.tuser = {
             fullname : userData.fullname,
             username : userData.username,
             email : userData.email,
@@ -42,13 +44,13 @@ class AuthUsecase implements IAuthUsecase {
         }
 
         const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
-        const token = await this.jwt.createActivationCode(user, activationCode);
-        const data = { user: { name: user.fullname }, activationCode };
+        const token = await this.jwt.createActivationCode(this.tuser, activationCode);
+        const data = { user: { name: this.tuser.fullname }, activationCode };
         console.log(activationCode);
 
         try {
           await sendMail({
-            email: user.email,
+            email: this.tuser.email,
             subject: "Account Activation",
             template: "activation-mail.ejs",
             data,
@@ -62,10 +64,7 @@ class AuthUsecase implements IAuthUsecase {
 
     public async activateUser(data: IActivationRequest) {
       try {
-        console.log(data, 'from data active');
-        
         const newUser = await this.jwt.verifyActivationCode(data);
-        console.log(newUser, 'from active functions');
         if (newUser.activationCode !== data.activation_code) {
           throw new Error("Invalid activation code");
         }
@@ -89,23 +88,27 @@ class AuthUsecase implements IAuthUsecase {
     }
 
     public async login(data: ILoginRequest) {
-        const user = await this.getUserByEmail(data.email);
+        try {
+          const user = await this.getUserByEmail(data.email);
         if (!user) {
           throw new Error("User not found");
         }
         if (user?.isBlock) {
           throw new Error("You are blocked by admin");
         }
-        // const isPasswordMatched = await this.compareUserPassword(
-        //   data.email,
-        //   data.password
-        // );
+        const isPasswordMatched = await this.compareUserPassword(
+          data.email,
+          data.password
+        );
     
-        // if (!isPasswordMatched) {
-        //   throw new Error("Invalid email or password");
-        // }
+        if (isPasswordMatched === false) {
+          throw new Error("Invalid email or password");
+        }
         const token = await this.jwt.createToken(user);
         return token;
+        } catch (error) {
+          throw error
+        }
     }
 
     public async UserByEmail(data : IRequestEmail){
@@ -147,36 +150,81 @@ class AuthUsecase implements IAuthUsecase {
     public async createUser(data: IAuth) {
       try {
         const user = await this.authRepository.create(data);
-        // if (!user) throw new Error("User not created");
-        // publish user create event
-        // await this.eventPublisher.publish(
-        //   Exchanges.USER_EXCHANGE,
-        //   Topics.USER_CREATE,
-        //   {
-        //     topic: Topics.USER_CREATE,
-        //     _id: user._id,
-        //     name: data.name,
-        //     email: data.email,
-        //     role: data.role,
-        //     avatar: data.avatar,
-        //   }
-        // );
+        
         return user;
       } catch (error) {
         throw error;
       }
     }
 
-    public async UpdatePassByEmail(data :InputPass){
-        
-      const existEmail  = await this.getUserByEmail(data.email);
+    public async UpdatePassByEmail(data :InputPass){ 
+      try {
+        const existEmail  = await this.getUserByEmail(data.email);
       if (!existEmail) {
         throw new Error("User not found");
       }
 
       const user = await this.authRepository.update(existEmail.email,data.npassword);
       return user;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    public async ResendUserOtp(dataE :IResendOtp){ 
+      try {
+
+        const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
+        const token = await this.jwt.createActivationCode(this.tuser, activationCode);
+        const data = { user: { name: dataE.email }, activationCode };
+
+        try {
+          await sendMail({
+            email: dataE.email,
+            subject: "Resend Otp Mail",
+            template: "activation-mail.ejs",
+            data,
+          });
+          const activationToken = token.token;
+          return activationToken;
+        } catch (error) {
+          throw error;
+        }
+      } catch (error) {
+        throw error;
+      }
     }
 }
 
 export default AuthUsecase;
+
+
+
+
+
+
+
+
+
+// public async createUser(data: IAuth) {
+//   try {
+//     const user = await this.authRepository.create(data);
+//     // if (!user) throw new Error("User not created");
+//     // publish user create event
+//     // await this.eventPublisher.publish(
+//     //   Exchanges.USER_EXCHANGE,
+//     //   Topics.USER_CREATE,
+//     //   {
+//     //     topic: Topics.USER_CREATE,
+//     //     _id: user._id,
+//     //     name: data.name,
+//     //     email: data.email,
+//     //     role: data.role,
+//     //     avatar: data.avatar,
+//     //   }
+//     // );
+//     return user;
+//   } catch (error) {
+//     throw error;
+//   }
+// }

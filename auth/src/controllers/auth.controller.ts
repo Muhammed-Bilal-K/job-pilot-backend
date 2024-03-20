@@ -25,7 +25,6 @@ class AuthController {
 
   public async activateUser(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body, 'from active');
       await this.authUsecase.activateUser(req.body);
 
       res.status(201).json({
@@ -60,8 +59,6 @@ class AuthController {
 
   public async UserByEmail(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body);
-      
       const user = await this.authUsecase.UserByEmail(req.body);
       
       console.log(user, 'from UserByEmail');
@@ -84,6 +81,20 @@ class AuthController {
       res.status(200).json({
         success: true,
         message: "Password Updated Successfully!"
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async ResendUserOtp(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = await this.authUsecase.ResendUserOtp(req.body);
+      
+      res.status(200).json({
+        success: true,
+        activationToken: token,
+        message: "Resend Otp successfully sent to your email address.",
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, error.statusCode || 500));

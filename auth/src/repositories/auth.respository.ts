@@ -8,7 +8,7 @@ class AuthRepository implements IAuthRepository {
 
   public async create(data : IAuth) : Promise<IAuth | null> {
     try {
-      console.log(data, 'from mogono');
+      console.log('from mogono');
       
       const user = new authModel({
         fullname:data.fullname,
@@ -18,7 +18,7 @@ class AuthRepository implements IAuthRepository {
         role:data.role,
       });
       await user.save();
-      console.log(user,'from mogondb');
+      console.log('from saved mogondb');
       
       return user;
     } catch (error) {
@@ -42,10 +42,17 @@ class AuthRepository implements IAuthRepository {
       if (!user) {
         throw new Error("IUser not found");
       }
-      const isPasswordMatched = bcryptjs.compareSync(password, user.password);
+      // const isPasswordMatched = bcryptjs.compareSync(password, user.password);
+      let isPasswordMatched: boolean;
+      if (password === user.password) {
+        isPasswordMatched = true;
+      }else[
+        isPasswordMatched = false,
+      ]
+      // const isPasswordMatched = password === user.password;
+      
       return isPasswordMatched;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -57,9 +64,7 @@ class AuthRepository implements IAuthRepository {
             { $set: { password: npassword } },
             { new: true }
         );
-        if (!user) {
-            throw new Error("User not found");
-        }
+        
         return user;
     } catch (error) {
       throw error

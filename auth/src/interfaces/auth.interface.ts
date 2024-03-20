@@ -26,3 +26,7 @@ export interface InputPass {
   email : string;
   npassword: string;
 }
+
+export interface IResendOtp{
+  email : string;
+}

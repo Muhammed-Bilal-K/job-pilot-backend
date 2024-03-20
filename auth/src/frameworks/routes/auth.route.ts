@@ -7,14 +7,15 @@ import JwtService from "../utils/jwt";
 const jwt = new JwtService();
 
 const authRepository = new AuthRepository();
-const authUsecase = new AuthUsecase(authRepository,jwt);
+const authUsecase = new AuthUsecase(authRepository, jwt);
 const authController = new AuthController(authUsecase);
 
 const router = express.Router();
 
-
-router.post("/register", (req: Request, res: Response, next: NextFunction) =>
-  authController.register(req, res, next)
+router.post(
+  "/register", 
+  (req: Request, res: Response, next: NextFunction) =>
+    authController.register(req, res, next)
 );
 
 router.post(
@@ -24,17 +25,28 @@ router.post(
   }
 );
 
-router.post("/login", (req: Request, res: Response, next: NextFunction) =>
-  authController.login(req, res, next)  
+router.post(
+  "/login", 
+  (req: Request, res: Response, next: NextFunction) =>
+    authController.login(req, res, next)
 );
 
-router.post("/forget-password", (req: Request, res: Response, next: NextFunction) =>
-  authController.UserByEmail(req, res, next)  
+router.post(
+  "/forget-password",
+  (req: Request, res: Response, next: NextFunction) =>
+    authController.UserByEmail(req, res, next)
 );
 
-router.post("/update-password", (req: Request, res: Response, next: NextFunction) =>
-  authController.UpdatePassByEmail(req, res, next)  
-  
+router.post(
+  "/update-password",
+  (req: Request, res: Response, next: NextFunction) =>
+    authController.UpdatePassByEmail(req, res, next)
+);
+
+router.post(
+  "/resend-otp", 
+  (req: Request, res: Response, next: NextFunction) =>
+    authController.ResendUserOtp(req, res, next)
 );
 
 export default router;

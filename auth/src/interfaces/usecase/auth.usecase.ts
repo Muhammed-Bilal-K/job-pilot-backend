@@ -4,7 +4,8 @@ import {
   ILoginRequest,
   IActivationRequest,
   IRequestEmail,
-  InputPass
+  InputPass,
+  IResendOtp
 } from "../auth.interface";
 
 interface IAuthUsecase {
@@ -13,6 +14,7 @@ interface IAuthUsecase {
   activateUser(data: IActivationRequest): Promise<void>;
   UserByEmail(data : IRequestEmail) : Promise<Auth>;
   UpdatePassByEmail(data : InputPass) : Promise<any>;
+  ResendUserOtp(data : IResendOtp) : Promise<string>;
 }
 
 export default IAuthUsecase;
