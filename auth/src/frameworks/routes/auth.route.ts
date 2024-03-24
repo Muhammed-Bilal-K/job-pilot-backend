@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import AuthController from "../../controllers/auth.controller";
-import AuthRepository from "../../repositories/auth.respository";
+import AuthRepository from "../../repositories/auth.repository";
 import AuthUsecase from "../../usecase/auth.usecase";
 import JwtService from "../utils/jwt";
 

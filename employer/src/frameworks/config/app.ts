@@ -3,9 +3,8 @@ import express, { NextFunction, Request, Response } from "express";
 export const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import authRouter from "../routes/auth.route";
-import adminAuthRouter from "../routes/admin.auth.route";
-import { ErrorMiddleware } from '../middleware/ErrorMiddleware';
+import employerRouter from "../routes/employer.route";
+// import { ErrorMiddleware } from '../middleware/ErrorMiddleware';
 dotenv.config();
 
 // body parser
@@ -26,8 +25,7 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 
 // routes
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v6/admin/auth', adminAuthRouter);
+app.use('/api/v2/employer', employerRouter);
 
 // unknown route
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
@@ -37,4 +35,4 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // error middleware
-app.use(ErrorMiddleware);
+// app.use(ErrorMiddleware);

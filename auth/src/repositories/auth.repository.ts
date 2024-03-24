@@ -1,6 +1,6 @@
-import IAuthRepository from "../interfaces/repository/auth.respository";
+import IAuthRepository from "../interfaces/repository/auth.repository";
 import authModel from "../frameworks/models/auth.model";
-import IAuth from '../entities/auth';
+import  { IAuth } from '../entities/auth';
 import bcryptjs from "bcryptjs";
 
 class AuthRepository implements IAuthRepository {
@@ -19,7 +19,7 @@ class AuthRepository implements IAuthRepository {
       });
       await user.save();
       console.log('from saved mogondb');
-      
+      //rolbase approach , api gate way
       return user;
     } catch (error) {
       throw error;

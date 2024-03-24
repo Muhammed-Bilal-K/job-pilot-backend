@@ -1,4 +1,4 @@
-import IAuth from "../../entities/auth";
+import { IAuth } from "../../entities/auth";
 
 interface IAuthRepository {
   findByEmail(email: string): Promise<IAuth | null>;

@@ -1,4 +1,4 @@
-interface Auth{
+interface IAuth{
     _id?:string,
     fullname:string,
     username:string,
@@ -9,4 +9,9 @@ interface Auth{
     credentials?:string
 }
 
-export default Auth
+interface Iadmin{
+    email:string,
+    password?:string,
+}
+
+export { IAuth, Iadmin };

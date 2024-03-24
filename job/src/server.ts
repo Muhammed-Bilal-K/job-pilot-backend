@@ -5,7 +5,7 @@ require("dotenv").config();
 connectDb();
 
 // create server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
-  console.log(`Server running ${PORT} | User`);
+  console.log(`Server running ${PORT} | Job`);
 });

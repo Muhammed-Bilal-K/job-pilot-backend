@@ -1,7 +1,10 @@
 import { Secret } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
-import { IActivationRequest, IRegisterRequest } from "../../interfaces/auth.interface";
-import IAuth from '../../entities/auth';
+import {
+  IActivationRequest,
+  IRegisterRequest,
+} from "../../interfaces/auth.interface";
+import { IAuth, Iadmin } from "../../entities/auth";
 
 class JwtService {
   constructor() {}
@@ -22,22 +25,36 @@ class JwtService {
     return { token, expires: expirationDate, user };
   }
 
-    async createActivationCode(
-      user: IRegisterRequest | null,
-      activationCode: string
-    ): Promise<{ token: string }> {
-      const token = jwt.sign(
-        {
-          user,
-          activationCode,
-        },
-        process.env.ACTIVE_SECRET! as Secret,
-        {
-          expiresIn: "10m",
-        }
-      );
-      return { token };
-    }
+  async adminCreateToken(admin: Iadmin) {
+    const token = jwt.sign(
+      { email: admin.email },
+      process.env.ACTIVE_SECRET! as Secret,
+      {
+        expiresIn: "3d",
+      }
+    );
+
+    const oneHourInMillis = 7 * 24 * 60 * 60 * 1000;
+    const expirationDate = new Date(Date.now() + oneHourInMillis);
+    return { token , expires: expirationDate , admin}
+  }
+
+  async createActivationCode(
+    user: IRegisterRequest | null,
+    activationCode: string
+  ): Promise<{ token: string }> {
+    const token = jwt.sign(
+      {
+        user,
+        activationCode,
+      },
+      process.env.ACTIVE_SECRET! as Secret,
+      {
+        expiresIn: "10m",
+      }
+    );
+    return { token };
+  }
 
   async verifyActivationCode(
     data: IActivationRequest
@@ -48,7 +65,6 @@ class JwtService {
     );
     return user as { user: IAuth; activationCode: string };
   }
-
 }
 
 export default JwtService;

@@ -8,8 +8,8 @@ import {
     InputPass,
   } from "../interfaces/auth.interface";
 import JwtService from "../frameworks/utils/jwt";
-import IAuth from '../entities/auth';
-import IAuthRepository from "../interfaces/repository/auth.respository";
+import { IAuth }from '../entities/auth';
+import IAuthRepository from "../interfaces/repository/auth.repository";
 import IAuthUsecase from "../interfaces/usecase/auth.usecase";
 
 class AuthUsecase implements IAuthUsecase {
