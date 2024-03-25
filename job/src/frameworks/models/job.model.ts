@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 interface IJob extends Document {
+  company :any
   jobTitle: string;
   tags: string;
   jobRole: string;
@@ -15,10 +16,16 @@ interface IJob extends Document {
   country: string;
   state: string;
   jobDescription: string;
+  companylogo: string;
 }
 
 const JobSchema: Schema<IJob> = new Schema<IJob>(
   {
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+      required: true
+    },
     jobTitle: { type: String, required: true },
     tags: { type: String, required: true },
     jobRole: { type: String, required: true },
@@ -33,6 +40,10 @@ const JobSchema: Schema<IJob> = new Schema<IJob>(
     country: { type: String, required: true },
     state: { type: String, required: true },
     jobDescription: { type: String, required: true },
+    companylogo : { 
+      type : String,
+      default : "https://ferdykorpwp.com/wp-content/uploads/2020/12/LogoSoftware.jpg",
+    } ,
   },
   {
     timestamps: true,

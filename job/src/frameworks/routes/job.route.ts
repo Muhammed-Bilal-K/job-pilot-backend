@@ -16,4 +16,10 @@ router.post(
     jobController.jobCreate(req,res,next)
   );
 
+router.get(
+    "/job-list", 
+    (req: Request, res: Response, next: NextFunction) =>
+    jobController.jobList(req,res,next)
+  );
+
 export default router;

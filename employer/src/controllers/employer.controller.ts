@@ -13,14 +13,13 @@ class EmployerController {
     }
   
   
-    public async jobCreate(req: Request, res: Response, next: NextFunction){
+    public async Save(req: Request, res: Response, next: NextFunction){
       try {
-          const token = await this.employerUsecase.jobCreate(req.body);
+          const employer = await this.employerUsecase.saveData(req.body);
   
           res.status(200).json({
             success: true,
-            activationToken: token,
-            message: "Otp successfully sent to your email address.",
+            message: "Company Data saved successfully.",
           });
       } catch (error : any) {
         //   return next(new ErrorHandler(error.message, error.statusCode || 500));
@@ -37,7 +36,7 @@ class EmployerController {
        }catch(err){
         next(err)
     }
-    }
+  }
 
 }
 

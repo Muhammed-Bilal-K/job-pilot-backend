@@ -6,7 +6,7 @@ export interface IRegisterRequest {
     password : string;
     confirmpassword? : string;
     isBlock? : boolean;
-  }
+  } 
 
   export interface IJobCreateRequest {
     jobTitle : string;
@@ -35,11 +35,6 @@ export interface IRegisterRequest {
     updatedAt: string;
     __v: number;
     type: string;
-  }
-  
-  export interface ICompany {
-    companyId: string;
-    planAmount: string;
   }
   
   export interface IPlanData {

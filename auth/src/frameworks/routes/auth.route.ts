@@ -3,11 +3,13 @@ import AuthController from "../../controllers/auth.controller";
 import AuthRepository from "../../repositories/auth.repository";
 import AuthUsecase from "../../usecase/auth.usecase";
 import JwtService from "../utils/jwt";
+import QueuePublisher from "../rabbitmq/publisher";
 
 const jwt = new JwtService();
 
 const authRepository = new AuthRepository();
-const authUsecase = new AuthUsecase(authRepository, jwt);
+const queuePublisher = new QueuePublisher();
+const authUsecase = new AuthUsecase(authRepository, jwt , queuePublisher);
 const authController = new AuthController(authUsecase);
 
 const router = express.Router();

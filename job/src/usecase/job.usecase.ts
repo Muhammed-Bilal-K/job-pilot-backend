@@ -22,6 +22,16 @@ class JobUsecase implements IJobUsecase {
         }
     }
 
+    public async jobList(){     
+        try {
+            const job = await this.jobRepository.listJobData();
+
+            return job;
+        } catch (error) {
+            throw error
+        }
+    }
+
 
 }
 

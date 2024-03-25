@@ -1,7 +1,8 @@
-import { IJobCreateRequest } from "../employer.interface";
+import { ICompany } from "../../frameworks/models/company.model";
 
 interface IEmployerUsecase {
-    jobCreate(data: IJobCreateRequest): Promise<any>;
+    saveData(data : ICompany ):Promise<any>;
+    getCompanyInfo(id : string) : Promise<any>;
   }
   
   export default IEmployerUsecase;

@@ -7,21 +7,27 @@ import {
     IResendOtp,
     InputPass,
   } from "../interfaces/auth.interface";
+import QueuePublisher from "../frameworks/rabbitmq/publisher";
 import JwtService from "../frameworks/utils/jwt";
 import { IAuth }from '../entities/auth';
 import IAuthRepository from "../interfaces/repository/auth.repository";
 import IAuthUsecase from "../interfaces/usecase/auth.usecase";
+import { Exchanges } from "../frameworks/rabbitmq/exchanges";
+import { Topics } from "../frameworks/rabbitmq/topics";
 
 class AuthUsecase implements IAuthUsecase {
     private authRepository : IAuthRepository; 
     private jwt: JwtService;
+    private queuePublisher: QueuePublisher;
     private tuser: IRegisterRequest | null;
     constructor(
         authRepository: IAuthRepository,
         jwt: JwtService,
+        queuePublisher: QueuePublisher,
     ){
         this.authRepository = authRepository;
         this.jwt = jwt;
+        this.queuePublisher = queuePublisher;
         this.tuser = null;
     }
 
@@ -151,7 +157,19 @@ class AuthUsecase implements IAuthUsecase {
     public async createUser(data: IAuth) {
       try {
         const user = await this.authRepository.create(data);
-        
+        if (!user) throw new Error("User not created");
+
+        await this.queuePublisher.publish(
+          Exchanges.USER_EXCHANGE,
+          Topics.USER_CREATE,
+          {
+            topic: Topics.USER_CREATE,
+            _id: user._id,
+            name: data.fullname,
+            email: data.email,
+            role: data.role,
+          }
+        );
         return user;
       } catch (error) {
         throw error;

@@ -1,6 +1,9 @@
+require("dotenv").config();
 import { app } from "./frameworks/config/app";
 import connectDb from "./frameworks/config/db";
-require("dotenv").config();
+import { startListening } from "./frameworks/rabbitmq/middleware";
+
+startListening();
 
 connectDb();
 

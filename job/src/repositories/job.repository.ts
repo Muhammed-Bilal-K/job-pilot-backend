@@ -7,9 +7,11 @@ class JobRepository implements IJobRepository {
 
   public async jobCreateData(data: IJobCreateRequest): Promise<any> {
     try {
+
       console.log(data);
       
       const job = new jobModel({
+        company : data.company,
         jobTitle: data.jobTitle,
         tags: data.tags,
         jobRole: data.jobRole,
@@ -26,6 +28,17 @@ class JobRepository implements IJobRepository {
         jobDescription: data.jobDescription,
       });
       await job.save();
+      return job;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  public async listJobData(): Promise<any> {
+    try {
+      const job = await jobModel.find({}).populate('company');
+      
       return job;
     } catch (error) {
       throw error;

@@ -9,6 +9,7 @@ export interface IRegisterRequest {
 }
 
 export interface IJobCreateRequest {
+  company : any;
   jobTitle: string;
   tags: string;
   jobRole: string;

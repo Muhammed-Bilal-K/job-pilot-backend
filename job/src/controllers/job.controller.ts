@@ -21,6 +21,20 @@ class JobController {
         //   return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
+
+    public async jobList(req: Request, res: Response, next: NextFunction){
+      try {
+          const job = await this.jobUsecase.jobList();
+  
+          res.status(200).json({
+            success: true,
+            message: "job listed successfull.",
+            jobs : job
+          });
+      } catch (error : any) {
+        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+      }
+    }
 }
 
 export default JobController;

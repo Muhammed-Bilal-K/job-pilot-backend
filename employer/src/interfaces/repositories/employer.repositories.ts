@@ -1,7 +1,8 @@
-import { IJobCreateRequest } from "../employer.interface";
+import { ICompany } from "../../frameworks/models/company.model";
 
 interface IEmployerRepository {
-    jobCreateData(data : IJobCreateRequest): Promise<any>;
+    saveCompanyDetail(data : ICompany) : Promise<ICompany | null>;
+    findById( id: string) : Promise<any>
 }
 
 export default IEmployerRepository;
