@@ -22,6 +22,15 @@ router.post(
     employerController.Save(req,res,next)
   );
 
+
+  router.get(
+    "/list-all-auth", 
+    (req: Request, res: Response, next: NextFunction) =>
+    employerController.allAuthInfo(req,res,next)
+  );
+
+
+
 router.post(
     "/plans", 
     (req: Request, res: Response, next: NextFunction) =>

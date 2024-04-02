@@ -9,7 +9,10 @@ class AuthRepository implements IAuthRepository {
   public async create(data : IAuth) : Promise<IAuth | null> {
     try {
       console.log('from mogono');
-      const hashPassword = bcryptjs.hashSync(data.password!, 10);
+      let hashPassword; 
+      if (data.password) {
+        hashPassword = bcryptjs.hashSync(data.password!, 10);
+      }
       const user = new authModel({
         fullname:data.fullname,
         username: data.username,
@@ -17,11 +20,10 @@ class AuthRepository implements IAuthRepository {
         password: hashPassword,
         role:data.role,
       });
-      await user.save();
-      console.log('from saved mogondb');
-      //rolbase approach , api gate way
+       await user.save();
       return user;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -29,6 +31,16 @@ class AuthRepository implements IAuthRepository {
   public async findByEmail(email: string): Promise<IAuth | null> {
     try {
       const user = await authModel.findOne({ email });
+      
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async ListUsers(): Promise<unknown> {
+    try {
+      const user = await authModel.find({role : 'candidate'});
       
       return user;
     } catch (error) {

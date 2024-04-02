@@ -11,10 +11,13 @@ import {
 interface IAuthUsecase {
   login(data: ILoginRequest): Promise<any>;
   register(userData: IRegisterRequest): Promise<any>;
+  socialAuth(data: IAuth): Promise<any>;
   activateUser(data: IActivationRequest): Promise<void>;
   UserByEmail(data : IRequestEmail) : Promise<IAuth>;
   UpdatePassByEmail(data : InputPass) : Promise<any>;
   ResendUserOtp(data : IResendOtp) : Promise<string>;
+  CurrentUserData(token : string | undefined) : Promise<IAuth>;
+  ListUsers() : Promise<unknown>;
 }
 
 export default IAuthUsecase;

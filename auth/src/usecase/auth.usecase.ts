@@ -14,6 +14,7 @@ import IAuthRepository from "../interfaces/repository/auth.repository";
 import IAuthUsecase from "../interfaces/usecase/auth.usecase";
 import { Exchanges } from "../frameworks/rabbitmq/exchanges";
 import { Topics } from "../frameworks/rabbitmq/topics";
+import { token } from "morgan";
 
 class AuthUsecase implements IAuthUsecase {
     private authRepository : IAuthRepository; 
@@ -154,6 +155,26 @@ class AuthUsecase implements IAuthUsecase {
         }
     }
 
+    public async socialAuth(data: IAuth) {
+      try {
+        const user = await this.getUserByEmail(data.email);
+        let token;
+        if (!user) {
+          const newUser = await this.createUser(data);
+        
+          token = await this.jwt.createToken(newUser);
+        }else{
+          token = await this.jwt.createToken(user);
+        }
+        
+        return token;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      
+      }
+    }
+
     public async createUser(data: IAuth) {
       try {
         const user = await this.authRepository.create(data);
@@ -166,6 +187,7 @@ class AuthUsecase implements IAuthUsecase {
             topic: Topics.USER_CREATE,
             _id: user._id,
             name: data.fullname,
+            username:data.username,
             email: data.email,
             role: data.role,
           }
@@ -186,6 +208,30 @@ class AuthUsecase implements IAuthUsecase {
       const user = await this.authRepository.update(existEmail.email,data.npassword);
       return user;
       } catch (error) {
+        throw error;
+      }
+    }
+
+    public async CurrentUserData(data :string | undefined){ 
+      try {
+          const userData = await this.jwt.verifyForCurr(data);
+          
+          const user = await this.authRepository.findByEmail(userData.email);
+          
+          return user as IAuth;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
+
+    public async ListUsers(){ 
+      try {
+          const user = await this.authRepository.ListUsers();
+          
+          return user as IAuth;
+      } catch (error) {
+        console.log(error);
         throw error;
       }
     }

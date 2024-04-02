@@ -10,7 +10,8 @@ class AuthRepository implements IAuthRepository{
         if (data.role === 'employer') { 
           const user = new AuthModel({
             id : data._id,
-            username : data.name,
+            name : data.name,
+            username : data.username,
             email : data.email,
             role : data.role
           });

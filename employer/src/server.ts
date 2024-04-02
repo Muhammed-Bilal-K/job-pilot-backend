@@ -3,7 +3,9 @@ import { app } from "./frameworks/config/app";
 import connectDb from "./frameworks/config/db";
 import { startListening } from "./frameworks/rabbitmq/middleware";
 
-startListening();
+setTimeout(()=>{
+  startListening();
+},20000)
 
 connectDb();
 

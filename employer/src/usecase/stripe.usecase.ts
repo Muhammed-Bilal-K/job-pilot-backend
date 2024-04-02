@@ -11,7 +11,7 @@ class StripeUsecase{
 
     async createPlans(data : IPlanData){
         try{
-           const payment = this.stripe.createPlan(data.plan , data.planAmount);
+           const payment = this.stripe.createPlan(data.plan , data.planAmount , data.companyId);
            return (await payment).url;
         }catch(err){
             throw err

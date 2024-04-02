@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: job-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: job
+  template:
+    metadata:
+      labels:
+        app: job
+    spec:
+      containers:
+        - name: job
+          image: mhdbilal/job
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: job-mongo
+                  key: MONGO_URI
+            - name: RABBIT_MQ
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-mq
+                  key: RABBIT_MQ 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: job-clsip-srv
+spec:
+  selector:
+    app: job
+  ports:
+    - name: job
+      protocol: TCP
+      port: 3002
+      targetPort: 3002

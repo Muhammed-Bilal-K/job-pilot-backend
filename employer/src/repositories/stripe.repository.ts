@@ -1,12 +1,13 @@
 import Stripe from "stripe";
 import { IPlan } from "../interfaces/employer.interface";
+import AuthModel from '../frameworks/models/auth.model';
 
 require('dotenv').config();
 
 class StripeRepository {
   private stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-  async createPlan(plan: IPlan, price: string) {
+  async createPlan(plan: IPlan, price: string , companyId : string) {
     const lineItems = [
       {
         price_data: {
@@ -28,9 +29,21 @@ class StripeRepository {
           mode: "payment",
           success_url: "http://localhost:5173/employer/emplo-dash",
           cancel_url: "http://localhost:5173/employer/emplo-dash/post_job",
+          client_reference_id: companyId
         }
       );
+
+      await this.updateStripeCustomerId(companyId, session.id);
+
       return session;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async updateStripeCustomerId(companyId: string, stripeId: string) {
+    try {
+      await AuthModel.findByIdAndUpdate(companyId, { stripeCustomerId: stripeId });
     } catch (err) {
       throw err;
     }

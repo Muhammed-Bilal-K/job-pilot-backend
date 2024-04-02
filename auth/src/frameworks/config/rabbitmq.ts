@@ -5,8 +5,8 @@ const connect = async function (): Promise<{ connection: Connection | undefined,
   try {
     let channel: Channel | undefined;
     let connection: Connection | undefined;
-    const amqpServer = process.env.RABBIT_MQ!;
-    connection = await amqp.connect(amqpServer);
+    // const amqpServer = process.env.RABBIT_MQ!
+    connection = await amqp.connect("amqp://rabbitmq:5672");
     channel = await connection.createChannel();
     console.log("Channel created");
     return { connection, channel };

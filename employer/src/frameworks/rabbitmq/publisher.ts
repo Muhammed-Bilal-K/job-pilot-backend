@@ -10,7 +10,6 @@ class QueuePublisher {
     this.connection = undefined;
   }
 
-  //to publish in a queue
   async publish( exchange: string, routingKey: string, data: unknown ): Promise<boolean> {
     await this.ensureConnection();
     if (!this.channel || !this.connection) {

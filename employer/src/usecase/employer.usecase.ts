@@ -30,7 +30,7 @@ class EmployerUsecase implements IEmployerUsecase {
                 {
                   topic: Topics.JOB_CREATE,
                   _id: employer.companyId,
-                  name: ExistCompany.companyId.username,
+                  companyname: ExistCompany.companyId.username,
                   email: ExistCompany.companyId.email,
                 }
               );
@@ -39,6 +39,17 @@ class EmployerUsecase implements IEmployerUsecase {
           } catch (error) {
             throw error;
           }
+    }
+
+    async allAuthInfo(){
+      try {
+        const company=await this.employerRepository.find();
+            
+        return company
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     }
 
     async getCompanyInfo(id:string){

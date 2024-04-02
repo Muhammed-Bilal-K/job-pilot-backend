@@ -23,6 +23,33 @@ class AdminAuthRepository implements IAdminAuthRepository {
       return admin;
   }
 
+  public async editSubscription(id : any , data : any) : Promise<any> {
+    try {
+      const subscription = await adminAuthModel.findByIdAndUpdate(id, {
+          type : data.name,
+          name: data.name,
+          amount: data.amount,
+          features: data.features,
+          description: data.description
+      }, { new: true });
+
+      if (!subscription) {
+          throw new Error('Subscription not found');
+      }
+
+      console.log(id);
+      console.log('from auth');
+      console.log(data);
+
+      console.log(subscription);
+      
+      return subscription;
+  } catch (error) {
+    console.log(error);
+      throw error;
+  }
+  }
+
   public async createSubscription(data : ICreateSubscriptionRequest) : Promise<any> {
     try {
       const admin = new adminAuthModel({
@@ -40,6 +67,8 @@ class AdminAuthRepository implements IAdminAuthRepository {
       throw error;
     }
   }
+
+
 
   public async getPlanDetails() : Promise<any> {
     try {

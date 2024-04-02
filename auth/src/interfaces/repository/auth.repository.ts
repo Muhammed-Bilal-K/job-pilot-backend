@@ -6,8 +6,9 @@ interface IAuthRepository {
     email: string,
     password: string
   ): Promise<boolean>;
-  create(data: IAuth): Promise<IAuth | null>;
+  create(data: IAuth): Promise<any>;
   update(email: string, npassword:string) : Promise<any>;
+  ListUsers():Promise<unknown>
 }
 
 export default IAuthRepository;

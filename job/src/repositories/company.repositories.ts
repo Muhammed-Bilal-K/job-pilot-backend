@@ -1,15 +1,15 @@
 import ICompany from "../entities/job";
 import ICompanyRepository from "../interfaces/repositories/company.repositories";
-import { CompanyModel } from "../frameworks/models/companyModel";
+import { CompanyModel } from "../frameworks/models/company.model";
 
-class AuthRepository implements ICompanyRepository{
+class CompanyRepository implements ICompanyRepository{
   constructor(){}
 
     public async createUser(data: ICompany): Promise<unknown> {
       try {
           const company = new CompanyModel({
             id: data._id,
-            companyusername : data.name,
+            companyname : data.companyname,
             email : data.email,
           });
           await company.save();
@@ -20,4 +20,4 @@ class AuthRepository implements ICompanyRepository{
     }   
 }
 
-export default AuthRepository
+export default CompanyRepository

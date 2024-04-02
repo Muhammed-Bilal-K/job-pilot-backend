@@ -1,5 +1,5 @@
 interface IAuth{
-    _id?:string,
+    _id:string,
     fullname:string,
     username:string,
     email:string,
@@ -14,4 +14,10 @@ interface Iadmin{
     password?:string,
 }
 
-export { IAuth, Iadmin };
+interface IVerifyCurr{
+    _id:string,
+    email:string,
+    role:string
+}
+
+export { IAuth, Iadmin , IVerifyCurr};

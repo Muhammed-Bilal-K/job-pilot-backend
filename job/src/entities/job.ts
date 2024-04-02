@@ -1,6 +1,6 @@
 interface ICompany {
     _id: any;
-    name: string;
+    companyname: string;
     email: string;
   }
   

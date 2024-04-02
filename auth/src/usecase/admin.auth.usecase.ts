@@ -36,6 +36,16 @@ class AdminAuthUsecase implements IAdminAuthUsecase {
     }
   }
 
+  public async editSubscription(id : any , planData : any) {
+    try {
+      const adminplan = this.adminAuthRepository.editSubscription(id , planData);
+
+      return adminplan;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async createPlan(data : ICreateSubscriptionRequest){
     try {
       const admin = await this.adminAuthRepository.createSubscription(data);

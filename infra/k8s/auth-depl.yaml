@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: mhdbilal/auth
+          env:
+            - name: ACTIVE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: active-secret
+                  key: ACTIVE_SECRET
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: auth-mongo
+                  key: MONGO_URI
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-host
+                  key: SMTP_HOST
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-port
+                  key: SMTP_PORT
+            - name: SMTP_SERVICE
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-service
+                  key: SMTP_SERVICE
+            - name: SMTP_MAIL
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-mail
+                  key: SMTP_MAIL     
+            - name: SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-pass
+                  key: SMTP_PASS
+            - name: RABBIT_MQ
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-mq
+                  key: RABBIT_MQ 
+                           
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-clsip-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

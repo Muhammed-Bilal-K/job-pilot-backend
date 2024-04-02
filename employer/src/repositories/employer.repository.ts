@@ -1,5 +1,6 @@
 import IEmployerRepository from "../interfaces/repositories/employer.repositories";
 import CompanyModel, { ICompany } from "../frameworks/models/company.model";
+import AuthModel from "../frameworks/models/auth.model";
 
 class EmployerRepository implements IEmployerRepository {
   constructor() {}
@@ -10,6 +11,7 @@ class EmployerRepository implements IEmployerRepository {
       const employer = new CompanyModel({
         companyId: data.companyId,
         name: data.name,
+        email:data.email,
         logo: data.logo,
         banner: data.banner,
         about: data.about,
@@ -42,6 +44,16 @@ class EmployerRepository implements IEmployerRepository {
     }catch(err){
         return err
     }
-}
+  }
+
+  async find(): Promise<any> {
+    try{
+        const company=await AuthModel.find({});
+      
+        return company
+    }catch(err){
+        return err
+    }
+  }
 }
 export default EmployerRepository;

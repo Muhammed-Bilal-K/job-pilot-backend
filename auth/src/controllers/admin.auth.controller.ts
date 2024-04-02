@@ -29,6 +29,24 @@ class AdminAuthcontroller {
       return next(new ErrorHandler(error.message, error.statusCode || 500)); 
     }
   }
+  
+  public async editSubscription(req: Request, res: Response, next: NextFunction) {
+    try {
+      
+      const { id } = req.params;
+      const planData = req.body;
+
+      const admin = await this.adminAuthUsecase.editSubscription(id , planData);
+      
+      res.status(200).json({
+        success: true,
+        message: 'Plan updated successfully',
+        plan: admin
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500)); 
+    }
+  }
 
   public async createSubscription(req: Request, res: Response, next: NextFunction){
 

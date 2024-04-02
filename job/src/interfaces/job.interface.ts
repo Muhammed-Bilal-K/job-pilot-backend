@@ -8,6 +8,13 @@ export interface IRegisterRequest {
   isBlock?: boolean;
 }
 
+export interface IJobAppply{
+  coverLetter:string,
+  resumeURL:string,
+  jobId:string,
+  userId:string,
+}
+
 export interface IJobCreateRequest {
   company : any;
   jobTitle: string;

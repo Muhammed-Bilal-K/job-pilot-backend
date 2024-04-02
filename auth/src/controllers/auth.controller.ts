@@ -36,6 +36,30 @@ class AuthController {
     }
   }
 
+
+  public async socialAuth(req: Request, res: Response, next: NextFunction) {
+    try {
+      
+      const user = await this.authUsecase.socialAuth(req.body);
+
+      res.cookie("token", user.token, {
+        expires: user.expires,
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
+      res.status(200).json({
+        success: true,
+        message: "signed successfully",
+        token: user.token,
+        user: user.user,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+
   public async login(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await this.authUsecase.login(req.body);
@@ -95,6 +119,38 @@ class AuthController {
         success: true,
         activationToken: token,
         message: "Resend Otp successfully sent to your email address.",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async CurrentUserData(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const token = req.headers.authorization;
+
+      const user = await this.authUsecase.CurrentUserData(token);
+      
+      res.status(200).json({
+        success: true,
+        currentUser: user,
+        message: "Current User Data fetch successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async ListUserData(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const user = await this.authUsecase.ListUsers();
+      
+      res.status(200).json({
+        success: true,
+        Users: user,
+        message: "Listed User Data fetch successfully",
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, error.statusCode || 500));

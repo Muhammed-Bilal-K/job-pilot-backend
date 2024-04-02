@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employer-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employer
+  template:
+    metadata:
+      labels:
+        app: employer
+    spec:
+      containers:
+        - name: employer
+          image: mhdbilal/employer
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: employer-mongo
+                  key: MONGO_URI
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: payment-secret
+                  key: STRIPE_SECRET_KEY
+            - name: PUBLISHABLE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: payment-publish
+                  key: PUBLISHABLE_KEY
+            - name: RABBIT_MQ
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-mq
+                  key: RABBIT_MQ 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: employer-clsip-srv
+spec:
+  selector:
+    app: employer
+  ports:
+    - name: employer
+      protocol: TCP
+      port: 3001
+      targetPort: 3001

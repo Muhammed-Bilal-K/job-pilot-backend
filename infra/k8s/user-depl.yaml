@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user
+          image: mhdbilal/user
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: user-mongo
+                  key: MONGO_URI
+            - name: RABBIT_MQ
+              valueFrom:
+                secretKeyRef:
+                  name: rabbit-mq
+                  key: RABBIT_MQ 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-clsip-srv
+spec:
+  selector:
+    app: user
+  ports:
+    - name: user
+      protocol: TCP
+      port: 3003
+      targetPort: 3003

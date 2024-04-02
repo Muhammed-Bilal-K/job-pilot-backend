@@ -10,7 +10,8 @@ class AuthRepository implements IAuthRepository{
         if (data.role === 'candidate') { 
           const user = new AuthModel({
             id : data._id,
-            username : data.name,
+            name : data.name,
+            username:data.username,
             email : data.email,
             role : data.role
           });
@@ -20,6 +21,7 @@ class AuthRepository implements IAuthRepository{
           console.log('not candidate');
         }
       } catch (error) {
+        console.log(error);
         throw error;
       }
     }   

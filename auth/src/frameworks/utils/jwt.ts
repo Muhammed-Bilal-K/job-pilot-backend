@@ -4,7 +4,7 @@ import {
   IActivationRequest,
   IRegisterRequest,
 } from "../../interfaces/auth.interface";
-import { IAuth, Iadmin } from "../../entities/auth";
+import { IAuth, IVerifyCurr, Iadmin } from "../../entities/auth";
 
 class JwtService {
   constructor() {}
@@ -64,6 +64,14 @@ class JwtService {
       process.env.ACTIVE_SECRET as string
     );
     return user as { user: IAuth; activationCode: string };
+  }
+
+  async verifyForCurr(
+    data : string | undefined
+  ) : Promise <IVerifyCurr> {
+    const decodedUser = jwt.verify(data!, process.env.ACTIVE_SECRET as string);
+    
+    return decodedUser as IVerifyCurr;
   }
 }
 

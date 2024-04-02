@@ -23,6 +23,13 @@ router.post(
   }
 );
 
+router.put(
+  "/subscription/plans/:id",
+  (req: Request, res: Response, next: NextFunction) => {
+    adminAuthController.editSubscription(req, res, next);
+  }
+);
+
 router.get(
   "/get-plan-details",
   (req: Request, res: Response, next: NextFunction) => {

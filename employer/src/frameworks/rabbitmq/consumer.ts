@@ -28,13 +28,12 @@ class QueueConsumer {
 
       await this.channel.bindQueue(queue.queue, exchange, routingKey);
 
-      // Consume messages from the queue
       this.channel.consume(queue.queue, async (data) => {
         if (data) {
           try {
             const decodedData = JSON.parse(data.content.toString());
             await callback(decodedData);
-            this.channel?.ack(data); // Acknowledge successful processing
+            this.channel?.ack(data);
           } catch (err) {
             console.error("Error processing message:", err);
           }

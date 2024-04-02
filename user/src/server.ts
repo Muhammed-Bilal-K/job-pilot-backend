@@ -3,7 +3,9 @@ import connectDb from "./frameworks/config/db";
 require("dotenv").config();
 import { startListening } from "./frameworks/rabbitmq/middleware";
 
-startListening();
+setTimeout(()=>{
+  startListening();
+},20000)
 
 connectDb();
 

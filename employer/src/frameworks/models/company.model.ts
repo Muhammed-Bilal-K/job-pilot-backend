@@ -17,6 +17,7 @@ export interface ICompany extends Document {
   vision: string;
   socialLinks1: string;
   socialLinks2: string;
+  email:string;
   phone: string;
 }
 
@@ -28,16 +29,17 @@ const CompanySchema: Schema<ICompany> = new Schema<ICompany>(
       required: true
     },
     name: { type: String  },
+    email: { type: String, default: "" },
+    industryType: { type: String, default: "" },
+    country: { type: String, default: "" },
+    state: { type: String, default: "" },
     logo: { type: String, default: "" },
     banner: { type: String, default: "" },
     about: { type: String, default: "" },
     organizationType: { type: String, default: "" },
-    industryType: { type: String, default: "" },
     teamSize: { type: String, default: "" },
     yearEstablished: { type: String, default: "" },
     website: { type: String, default: "" },
-    country: { type: String, default: "" },
-    state: { type: String, default: "" },
     vision: { type: String, default: "" },
     socialLinks1: { type: String, default: "" },
     socialLinks2: { type: String, default: "" },

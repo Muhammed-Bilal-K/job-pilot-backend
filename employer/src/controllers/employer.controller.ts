@@ -25,6 +25,20 @@ class EmployerController {
         //   return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
+
+    public async allAuthInfo(req: Request, res: Response, next: NextFunction){
+      try {
+          const employer = await this.employerUsecase.allAuthInfo();
+  
+          res.status(200).json({
+            success: true,
+            message: "Company Data saved successfully.",
+            AuthInfo : employer
+          });
+      } catch (error : any) {
+        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+      }
+    }
     
     public async Subscription(req: Request, res: Response, next: NextFunction){
       try{
