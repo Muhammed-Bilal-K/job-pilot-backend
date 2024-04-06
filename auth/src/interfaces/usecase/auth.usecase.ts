@@ -18,6 +18,9 @@ interface IAuthUsecase {
   ResendUserOtp(data : IResendOtp) : Promise<string>;
   CurrentUserData(token : string | undefined) : Promise<IAuth>;
   ListUsers() : Promise<unknown>;
+  ListEmployers() : Promise<unknown>;
+  blockUser(id : string) : Promise<void>;
+  blockEmployer(id : string) : Promise<void>;
 }
 
 export default IAuthUsecase;

@@ -7,6 +7,7 @@ interface IJobUsecase {
     jobApply(data : IJobAppply):Promise<unknown>;
     allJobApplicant():Promise<unknown>;
     Applicant(id : string):Promise<unknown>;
+    ComapnyJobs(email : string):Promise<unknown>;
   }
   
   export default IJobUsecase;

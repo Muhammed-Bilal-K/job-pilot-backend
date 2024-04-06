@@ -53,6 +53,16 @@ class JobUsecase implements IJobUsecase {
         }
     }
 
+    public async ComapnyJobs(email : string){     
+        try {
+            const job = await this.jobRepository.JobDetailsofCompany(email);
+
+            return job;
+        } catch (error) {
+            throw error
+        }
+    }
+
     public async companyDetail(){     
         try {
             const job = await this.jobRepository.CompanyData();

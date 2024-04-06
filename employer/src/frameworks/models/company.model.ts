@@ -17,7 +17,7 @@ export interface ICompany extends Document {
   vision: string;
   socialLinks1: string;
   socialLinks2: string;
-  email:string;
+  email: string;
   phone: string;
 }
 
@@ -26,16 +26,16 @@ const CompanySchema: Schema<ICompany> = new Schema<ICompany>(
     companyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Auth",
-      required: true
+      required: true,
     },
-    name: { type: String  },
+    name: { type: String },
     email: { type: String, default: "" },
-    industryType: { type: String, default: "" },
-    country: { type: String, default: "" },
-    state: { type: String, default: "" },
     logo: { type: String, default: "" },
     banner: { type: String, default: "" },
     about: { type: String, default: "" },
+    industryType: { type: String, default: "" },
+    country: { type: String, default: "" },
+    state: { type: String, default: "" },
     organizationType: { type: String, default: "" },
     teamSize: { type: String, default: "" },
     yearEstablished: { type: String, default: "" },

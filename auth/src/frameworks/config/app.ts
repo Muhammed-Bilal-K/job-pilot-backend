@@ -5,7 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRouter from "../routes/auth.route";
 import adminAuthRouter from "../routes/admin.auth.route";
-import { ErrorMiddleware } from '../middleware/ErrorMiddleware';
+import { ErrorMiddleware } from '@validation-pilot/common';
 dotenv.config();
 
 // body parser
@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 const corsOptions = {
   origin: "http://localhost:5173",
-  methods: "GET, POST, OPTIONS, PATCH, PUT",
+  methods: "GET, POST, OPTIONS, PATCH, PUT , DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };

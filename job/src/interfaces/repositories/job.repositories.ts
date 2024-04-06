@@ -7,6 +7,7 @@ interface IJobRepository {
     jobApply(data : IJobAppply) : Promise<unknown>;
     listAllApplicant() : Promise<unknown>;
     Applicant(id : string) : Promise<unknown>;
+    JobDetailsofCompany(email : string) : Promise<unknown>;
 }
 
 export default IJobRepository;

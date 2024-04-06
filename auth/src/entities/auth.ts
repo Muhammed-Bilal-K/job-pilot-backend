@@ -7,6 +7,7 @@ interface IAuth{
     role:string,
     isBlock?: boolean,
     credentials?:string
+    isVerify?:number
 }
 
 interface Iadmin{

@@ -8,6 +8,15 @@ export interface IRegisterRequest {
     isBlock? : boolean;
   } 
 
+  export interface ICompanyInfoCreate {
+    companyId: string;
+    name: string;
+    email: string;
+    about: string;
+    logo: string;
+    banner: string;
+  }
+
   export interface IJobCreateRequest {
     jobTitle : string;
     tags : string;

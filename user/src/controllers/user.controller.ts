@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import IUserUsecase from "../interfaces/usecase/usercandidate.usecase";
+import { ErrorHandler } from "@validation-pilot/common";
 
 class UserController {
     private userUsecase: IUserUsecase
@@ -19,7 +20,7 @@ class UserController {
             message: "profile updated successfully.",
           });
       } catch (error : any) {
-        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
     

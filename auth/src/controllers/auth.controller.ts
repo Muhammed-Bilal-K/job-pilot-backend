@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import IAuthUsecase from "../interfaces/usecase/auth.usecase";
-import ErrorHandler from "../frameworks/middleware/ErrorHandler";
+import { ErrorHandler } from "@validation-pilot/common";
 
 class AuthController {
   private authUsecase: IAuthUsecase;
@@ -146,6 +146,55 @@ class AuthController {
     try {
 
       const user = await this.authUsecase.ListUsers();
+      
+      res.status(200).json({
+        success: true,
+        Users: user,
+        message: "Listed User Data fetch successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async accessControllUser(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const { id } = req.params;
+
+      const user = await this.authUsecase.blockUser(id);
+      
+      res.status(200).json({
+        success: true,
+        Users: user,
+        message: "Listed User Data fetch successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async ListEmployerData(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const user = await this.authUsecase.ListEmployers();
+      
+      res.status(200).json({
+        success: true,
+        Users: user,
+        message: "Listed User Data fetch successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async accessControllEmployer(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const { id } = req.params;
+
+      const user = await this.authUsecase.blockEmployer(id);
       
       res.status(200).json({
         success: true,

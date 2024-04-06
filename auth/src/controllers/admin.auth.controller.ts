@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import IAdminAuthUsecase from "../interfaces/usecase/admin.auth.usecase";
-import ErrorHandler from "../frameworks/middleware/ErrorHandler";
+import { ErrorHandler } from '@validation-pilot/common';
 
 class AdminAuthcontroller {
   private adminAuthUsecase: IAdminAuthUsecase;
   constructor(adminAuthUsecase: IAdminAuthUsecase) {
-    this.adminAuthUsecase = adminAuthUsecase; 
+    this.adminAuthUsecase = adminAuthUsecase;
   }
 
   public async login(req: Request, res: Response, next: NextFunction) {
@@ -24,46 +24,124 @@ class AdminAuthcontroller {
         token: admin.token,
         admin: admin.admin,
       });
-      
     } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500)); 
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
-  
-  public async editSubscription(req: Request, res: Response, next: NextFunction) {
+
+  public async editSubscription(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
-      
       const { id } = req.params;
       const planData = req.body;
 
-      const admin = await this.adminAuthUsecase.editSubscription(id , planData);
-      
+      const admin = await this.adminAuthUsecase.editSubscription(id, planData);
+
       res.status(200).json({
         success: true,
-        message: 'Plan updated successfully',
-        plan: admin
+        message: "Plan updated successfully",
+        plan: admin,
       });
     } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500)); 
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
 
-  public async createSubscription(req: Request, res: Response, next: NextFunction){
+  public async createSubscription(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const admin = await this.adminAuthUsecase.createSubcriptionPlan(req.body);
 
-    const admin = await this.adminAuthUsecase.createSubcriptionPlan(req.body);
-
-    res.json({
-      message:"good",
-    })
+      res.status(200).json({
+        status: true,
+        message: "Plan created successfully!",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
   }
 
-  public async getPlanDetails(req: Request, res: Response, next: NextFunction){
-    const admin = await this.adminAuthUsecase.getPlanDetails();
+  public async DoneVerify(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
 
-    res.json({
-      message:"good",
-      planDetail: admin
-    })
+      const admin = await this.adminAuthUsecase.DoneVerify(id);
+
+      res.status(200).json({
+        status: true,
+        message: "Plan created successfully!",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async DeniedVerify(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      const admin = await this.adminAuthUsecase.DeniedVerify(id);
+
+      res.status(200).json({
+        status: true,
+        message: "Plan created successfully!",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async deleteSubscription(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { id } = req.params;
+
+      const admin = await this.adminAuthUsecase.deleteSubcriptionPlan(id);
+
+      res.status(200).json({
+        status: true,
+        message: "Plan deleted successfully!",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async deleteUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      const admin = await this.adminAuthUsecase.deleteUser(id);
+
+      res.status(200).json({
+        status: true,
+        message: "User deleted successfully!",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async getPlanDetails(req: Request, res: Response, next: NextFunction) {
+    try {
+      const admin = await this.adminAuthUsecase.getPlanDetails();
+
+      res.status(200).json({
+        message: "Listed all plans succesfully!",
+        planDetail: admin,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
   }
 }
 

@@ -29,6 +29,12 @@ router.post(
     employerController.allAuthInfo(req,res,next)
   );
 
+  router.get(
+    "/list-specific-company/:id", 
+    (req: Request, res: Response, next: NextFunction) =>
+    employerController.getCompanyInfo(req,res,next)
+  );
+
 
 
 router.post(
@@ -36,6 +42,7 @@ router.post(
     (req: Request, res: Response, next: NextFunction) =>
     employerController.Subscription(req,res,next)
   );
+
 
 
 export default router;

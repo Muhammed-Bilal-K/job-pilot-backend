@@ -20,6 +20,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.540.0",
     "@aws-sdk/s3-request-presigner": "^3.540.0",
+    "@validation-pilot/common": "^1.0.5",
     "amqplib": "^0.10.3",
     "aws-sdk": "^2.1589.0",
     "cookie-parser": "^1.4.6",

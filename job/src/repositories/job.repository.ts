@@ -62,8 +62,8 @@ class JobRepository implements IJobRepository {
         user: data.userId,
         job: data.jobId,
         coverLetter: data.coverLetter,
-        resumeURL: data.resumeURL 
-      })
+        resumeURL: data.resumeURL,
+      });
       await job.save();
       return job;
     } catch (error) {
@@ -81,14 +81,34 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async Applicant(id : string ): Promise<unknown> {
+  public async Applicant(id: string): Promise<unknown> {
     try {
-      const job = await ApplicationModel.find({user : id}).populate('job');
-
+      const job = await ApplicationModel.find({ user: id }).populate({
+        path: "job",
+        populate: { path: "company" },
+      });
       return job;
     } catch (error) {
       throw error;
     }
   }
+
+  public async JobDetailsofCompany(email: string): Promise<unknown> {
+    try {
+      // Find the company using the email
+      const company = await CompanyModel.findOne({ email: email });
+
+      if (!company) {
+        throw new Error("Company not found");
+      }
+
+      // Find jobs associated with the company using the company's _id
+      const jobList = await jobModel.find({ company: company._id });
+
+      return jobList;
+    } catch (error) {
+      throw error;
+    }
+}
 }
 export default JobRepository;

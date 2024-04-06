@@ -56,6 +56,46 @@ class AdminAuthUsecase implements IAdminAuthUsecase {
     }  
   }
 
+  public async deleteSubcriptionPlan(id : string){
+    try {
+      const admin = await this.adminAuthRepository.deleteSubscription(id);
+
+      return admin;
+    } catch (error) {
+      throw error
+    }  
+  }
+
+  public async deleteUser(id : string){
+    try {
+      const admin = await this.adminAuthRepository.deleteUser(id);
+
+      return admin;
+    } catch (error) {
+      throw error
+    }  
+  }
+  
+  public async DoneVerify(id : string){
+    try {
+      const admin = await this.adminAuthRepository.VerifyUser(id);
+
+      return admin;
+    } catch (error) {
+      throw error
+    }  
+  }
+
+  public async DeniedVerify(id : string){
+    try {
+      const admin = await this.adminAuthRepository.DeniedUser(id);
+
+      return admin;
+    } catch (error) {
+      throw error
+    }  
+  }
+
   public async getPlanDetails(){
     try {
       const admin = await this.adminAuthRepository.getPlanDetails();

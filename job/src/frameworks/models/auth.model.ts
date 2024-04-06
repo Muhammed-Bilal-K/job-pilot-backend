@@ -9,7 +9,7 @@ interface IAuth extends Document {
 }
 
 const AuthSchema: Schema<IAuth> = new Schema<IAuth>({
-  _id: { type: Schema.Types.ObjectId, default: new Types.ObjectId()},
+  _id: { type: Schema.Types.ObjectId },
   name: 
   { type: String,
      required: true 

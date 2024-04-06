@@ -1,0 +1,95 @@
+version: "3.8"
+services:
+  user:
+    build: ./user
+    container_name: jobpilot-user
+    depends_on:
+      - rabbitmq
+    ports:
+      - 3003:3003
+    env_file:
+      - ./user/.env
+    environment:
+      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotCandidate
+    develop:
+      watch:
+        - action: sync
+          path: ./user
+          target: /user
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./user/package.json
+  auth:
+    build: ./auth
+    container_name: jobpilot-auth
+    depends_on:
+      - rabbitmq
+    ports:
+      - 3000:3000
+    env_file:
+      - ./auth/.env
+    environment:
+      ACTIVE_SECRET: jobpilot@123$$
+      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotUser
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: "587"
+      SMTP_SERVICE: Gmail
+      SMTP_MAIL: bilalcr7juv@gmail.com
+      SMTP_PASS: xqrd drrx xmax yymw
+    develop:
+      watch:
+        - action: sync
+          path: ./auth
+          target: /auth
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./auth/package.json
+  employer:
+    build: ./employer
+    container_name: jobpilot-employer
+    depends_on:
+      - rabbitmq
+    ports:
+      - 3001:3001
+    env_file:
+      - ./employer/.env
+    environment:
+      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotEmployer
+    develop:
+      watch:
+        - action: sync
+          path: ./employer
+          target: /employer
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./employer/package.json
+  job:
+    build: ./job
+    container_name: jobpilot-job
+    depends_on:
+      - rabbitmq
+    ports:
+      - 3002:3002
+    env_file:
+      - ./job/.env
+    environment:
+      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotJob
+      AWS_BUCKET_NAME: jobpilotbucket
+      AWS_BUCKET_REGION: ap-south-1
+    develop:
+      watch:
+        - action: sync
+          path: ./job
+          target: /job
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./job/package.json
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - 5672:5672

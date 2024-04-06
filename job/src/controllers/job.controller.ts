@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import IJobUsecase from "../interfaces/usecase/job.usecase";
+import { ErrorHandler } from "@validation-pilot/common";
 
 class JobController {
     private jobUsecase: IJobUsecase
@@ -18,7 +19,7 @@ class JobController {
             message: "job created successfully.",
           });
       } catch (error : any) {
-        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
 
@@ -32,7 +33,7 @@ class JobController {
             jobs : job
           });
       } catch (error : any) {
-        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
 
@@ -46,7 +47,7 @@ class JobController {
             jobs : job
           });
       } catch (error : any) {
-        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
 
@@ -63,7 +64,24 @@ class JobController {
             jobs : job
           });
       } catch (error : any) {
-        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
+      }
+    }
+
+    public async ComapnyJobs(req: Request, res: Response, next: NextFunction){
+      try {
+
+        const { email } = req.params;
+
+          const job = await this.jobUsecase.ComapnyJobs(email);
+  
+          res.status(200).json({
+            success: true,
+            message: "job listed successfull.",
+            jobs : job
+          });
+      } catch (error : any) {
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
 
@@ -77,7 +95,7 @@ class JobController {
             job:job,
           });
       } catch (error : any) {
-        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
 
@@ -91,7 +109,7 @@ class JobController {
             comInfo : company
           });
       } catch (error : any) {
-        //   return next(new ErrorHandler(error.message, error.statusCode || 500));
+          return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
 }

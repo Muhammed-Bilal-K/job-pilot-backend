@@ -40,6 +40,12 @@ router.get(
     jobController.Applicant(req,res,next)
   );
 
+router.get(
+    "/list-jobs-company/:email", 
+    (req: Request, res: Response, next: NextFunction) =>
+    jobController.ComapnyJobs(req,res,next)
+  );
+
 router.post('/apply',(req: Request, res: Response, next: NextFunction) =>{
   jobController.jobApply(req,res,next)
 })

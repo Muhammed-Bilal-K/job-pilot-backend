@@ -1,7 +1,7 @@
-import { ICompany } from "../../frameworks/models/company.model";
+import { ICompanyInfoCreate } from "../employer.interface";
 
 interface IEmployerUsecase {
-    saveData(data : ICompany ):Promise<any>;
+    saveData(data : ICompanyInfoCreate ):Promise<any>;
     getCompanyInfo(id : string) : Promise<any>;
     allAuthInfo() : Promise<any>;
   }

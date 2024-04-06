@@ -4,7 +4,7 @@ export const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import employerRouter from "../routes/employer.route";
-// import { ErrorMiddleware } from '../middleware/ErrorMiddleware';
+import { ErrorMiddleware } from '@validation-pilot/common';
 dotenv.config();
 
 // body parser
@@ -35,4 +35,4 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // error middleware
-// app.use(ErrorMiddleware);
+app.use(ErrorMiddleware);

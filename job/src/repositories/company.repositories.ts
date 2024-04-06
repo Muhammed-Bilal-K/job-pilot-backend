@@ -11,6 +11,7 @@ class CompanyRepository implements ICompanyRepository{
             id: data._id,
             companyname : data.companyname,
             email : data.email,
+            logo : data.logo,
           });
           await company.save();
           return company;
