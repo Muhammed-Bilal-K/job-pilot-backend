@@ -27,7 +27,7 @@ class JwtService {
 
   async adminCreateToken(admin: Iadmin) {
     const token = jwt.sign(
-      { email: admin.email },
+      { email: admin.email , role : 'admin'},
       process.env.ACTIVE_SECRET! as Secret,
       {
         expiresIn: "3d",

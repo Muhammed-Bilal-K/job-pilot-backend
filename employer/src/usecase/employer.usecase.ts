@@ -37,6 +37,7 @@ class EmployerUsecase implements IEmployerUsecase {
           companyname: ExistCompany.name,
           email: ExistCompany.email,
           logo: ExistCompany.logo,
+          banner: ExistCompany.banner,
         }
       );
 

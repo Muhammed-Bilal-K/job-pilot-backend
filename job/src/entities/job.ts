@@ -3,6 +3,7 @@ interface ICompany {
     companyname: string;
     email: string;
     logo: string;
+    banner : string;
   }
   
   export default ICompany;

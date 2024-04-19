@@ -1,8 +1,10 @@
 import { IJobAppply, IJobCreateRequest } from "../interfaces/job.interface";
 import IJobRepository from "../interfaces/repositories/job.repositories";
-import jobModel from "../frameworks/models/job.model";
+import jobModel, { IJob } from "../frameworks/models/job.model";
 import { CompanyModel } from "../frameworks/models/company.model";
+import UserModel from "../frameworks/models/auth.model";
 import { ApplicationModel } from "../frameworks/models/application.model";
+import { FilterQuery } from "mongoose";
 
 class JobRepository implements IJobRepository {
   constructor() {}
@@ -13,8 +15,8 @@ class JobRepository implements IJobRepository {
 
       const job = new jobModel({
         company: data.company,
-        jobTitle: data.jobTitle,
-        tags: data.tags,
+        jobTitle: data.jobTitle.toLocaleLowerCase(),
+        tags: data.tags.toLocaleLowerCase(),
         jobRole: data.jobRole,
         minSalary: data.minSalary,
         maxSalary: data.maxSalary,
@@ -36,11 +38,84 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async listJobData(): Promise<any> {
+  public async listJobData(
+    selectedIndustries: any,
+    selectedSalaryRange: any,
+    selectedJobType: any,
+    selectedSort: string,
+    currentPage: any
+  ): Promise<any> {
     try {
-      const job = await jobModel.find({}).populate("company");
+      let job;
+      currentPage = parseInt(currentPage);
+      let totalJobsCount;
+      let sortOption: string | { [key: string]: 1 | -1 } = { createdAt: 1 };
+      const limit = 2;
 
-      return job;
+      if (currentPage === 0) {
+        job = await jobModel.find({}).populate("company");
+        return { jobs: job, totalPages: 1 };
+      }
+
+      if (
+        selectedIndustries ||
+        selectedSalaryRange ||
+        selectedJobType ||
+        selectedSort
+      ) {
+        if (selectedSort === "asc") {
+          sortOption = { createdAt: -1 };
+        } else {
+          sortOption = { createdAt: 1 };
+        }
+
+        const industryQuery =
+          selectedIndustries?.length > 0
+            ? { tags: { $in: selectedIndustries } }
+            : {};
+        const salaryRangeQuery = selectedSalaryRange
+          ? {
+              $and: [
+                {
+                  minSalary: {
+                    $gte: parseInt(selectedSalaryRange.split("-")[0]),
+                  },
+                },
+                {
+                  maxSalary: {
+                    $lte: parseInt(selectedSalaryRange.split("-")[1]),
+                  },
+                },
+              ],
+            }
+          : {};
+        const jobTypeQuery =
+          selectedJobType?.length > 0
+            ? { jobtype: { $in: selectedJobType } }
+            : {};
+
+        const combinedQuery = {
+          $and: [industryQuery, salaryRangeQuery, jobTypeQuery],
+        } as unknown as FilterQuery<IJob>;
+
+        job = await jobModel
+          .find(combinedQuery)
+          .populate("company")
+          .sort(sortOption);
+      } else {
+        // job = await jobModel.find({}).populate("company").skip((currentPage - 1) * limit).limit(limit);
+        job = await jobModel.find({}).populate("company");
+        totalJobsCount = await jobModel.countDocuments({});
+        console.log(totalJobsCount);
+      }
+
+      const totalPages = Math.ceil(totalJobsCount! / limit);
+
+      const startIndex = (currentPage - 1) * limit;
+      job = job.slice(startIndex, startIndex + limit);
+
+      return { jobs: job, totalPages: totalPages };
+      // return job;
     } catch (error) {
       throw error;
     }
@@ -83,11 +158,84 @@ class JobRepository implements IJobRepository {
 
   public async Applicant(id: string): Promise<unknown> {
     try {
-      const job = await ApplicationModel.find({ user: id }).populate({
-        path: "job",
-        populate: { path: "company" },
-      });
+      const job = await ApplicationModel.find({ user: id })
+        .populate({
+          path: "job",
+          populate: { path: "company" },
+        })
+        .sort({ createdAt: 1 });
       return job;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async AuthUserById(id: string): Promise<unknown> {
+    try {
+      const job = await UserModel.findOne({ _id: id })
+        .populate({ path: "favoriteJobs", populate: { path: "company" } })
+        .sort({ createdAt: 1 });
+      return job;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async MakeFavoriteJob(id: string, JobId: string): Promise<void> {
+    try {
+      const user = await UserModel.findById(id);
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      if (user.favoriteJobs.includes(JobId)) {
+        throw new Error("Job already exists in favorites");
+      }
+
+      user.favoriteJobs.push(JobId);
+
+      await user.save();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async GetPreferredJobs(preferedJobList: any): Promise<unknown> {
+    try {
+      console.log(preferedJobList);
+
+      if (!preferedJobList) {
+        throw new Error("Preferred job titles are required");
+      }
+
+      const keywords = preferedJobList
+        .split(",")
+        .map((keyword: string) => keyword.trim());
+
+      console.log(keywords);
+      const jobs = await jobModel.find({
+        $or: [
+          { jobTitle: { $regex: keywords.join("|"), $options: "i" } },
+          { tags: { $regex: keywords.join("|"), $options: "i" } },
+        ],
+      }).populate("company");
+
+      console.log(jobs);
+
+      return jobs;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  public async JobListByUser(id: string): Promise<unknown> {
+    try {
+      const jobs = await ApplicationModel.find({ job: id })
+        .populate("user")
+        .populate("job");
+      return jobs;
     } catch (error) {
       throw error;
     }
@@ -109,6 +257,6 @@ class JobRepository implements IJobRepository {
     } catch (error) {
       throw error;
     }
-}
+  }
 }
 export default JobRepository;

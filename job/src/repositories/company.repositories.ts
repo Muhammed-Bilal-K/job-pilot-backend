@@ -8,10 +8,11 @@ class CompanyRepository implements ICompanyRepository{
     public async createUser(data: ICompany): Promise<unknown> {
       try {
           const company = new CompanyModel({
-            id: data._id,
+            _id: data._id,
             companyname : data.companyname,
             email : data.email,
             logo : data.logo,
+            banner : data.banner,
           });
           await company.save();
           return company;

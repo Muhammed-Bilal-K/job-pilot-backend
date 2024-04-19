@@ -88,6 +88,26 @@ services:
             - node_modules/
         - action: rebuild
           path: ./job/package.json
+  chat:
+    build: ./chat
+    container_name: jobpilot-chat
+    depends_on:
+      - rabbitmq
+    ports:
+      - 3004:3004
+    env_file:
+      - ./chat/.env
+    environment:
+      MONGO_URI: "mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotChat"
+    develop:
+      watch:
+        - action: sync
+          path: ./chat
+          target: /chat
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./chat/package.json
   rabbitmq:
     image: rabbitmq
     container_name: rabbitmq

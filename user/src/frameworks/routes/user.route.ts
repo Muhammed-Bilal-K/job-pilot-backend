@@ -16,5 +16,10 @@ router.post(
     userController.Profile(req,res,next)
   );
 
+  router.get(
+    "/specific-profile/:id", 
+    (req: Request, res: Response, next: NextFunction) =>
+      userController.specificUser(req,res,next)
+  );
 
 export default router;

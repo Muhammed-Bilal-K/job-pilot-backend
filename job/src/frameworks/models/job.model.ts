@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-interface IJob extends Document {
+export interface IJob extends Document {
   company :any
   jobTitle: string;
   tags: string;

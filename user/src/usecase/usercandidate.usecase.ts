@@ -13,7 +13,15 @@ class UserUsecase implements IUserUsecase {
         const user = await this.userRepository.Profile(data);
     }
 
-
+    public async specificUser(id: string) {
+        try {
+          const job = await this.userRepository.specificUser(id);
+    
+          return job;
+        } catch (error) {
+          throw error;
+        }
+      }
 }
 
 export default UserUsecase;

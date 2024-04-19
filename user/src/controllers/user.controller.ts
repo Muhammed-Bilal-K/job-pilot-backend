@@ -23,6 +23,22 @@ class UserController {
           return next(new ErrorHandler(error.message, error.statusCode || 500));
       }
     }
+
+    public async specificUser(req: Request, res: Response, next: NextFunction){
+      try {
+        const { id } = req.params;
+  
+        const user = await this.userUsecase.specificUser(id);
+  
+        res.status(200).json({
+          success: true,
+          message: "user details.",
+          user: user,
+        });
+      } catch (error: any) {
+        return next(new ErrorHandler(error.message, error.statusCode || 500));
+      }
+    }
     
 }
 

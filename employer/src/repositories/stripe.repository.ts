@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { IPlan } from "../interfaces/employer.interface";
 import AuthModel from '../frameworks/models/auth.model';
+import moment from 'moment-timezone';
 
 require('dotenv').config();
 
@@ -42,8 +43,9 @@ class StripeRepository {
   }
 
   async updateStripeCustomerId(companyId: string, stripeId: string) {
+    const currentDateIndia = moment().tz('Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss.SSS');
     try {
-      await AuthModel.findByIdAndUpdate(companyId, { stripeCustomerId: stripeId });
+      await AuthModel.findByIdAndUpdate(companyId, { stripeCustomerId: stripeId , stripePurchaseDate : currentDateIndia});
     } catch (err) {
       throw err;
     }
