@@ -8,8 +8,8 @@ interface IAuthRepository {
   ): Promise<boolean>;
   create(data: IAuth): Promise<any>;
   update(email: string, npassword:string) : Promise<any>;
-  ListUsers():Promise<unknown>;
-  ListEmployers():Promise<unknown>;
+  listUsers():Promise<unknown>;
+  listEmployers():Promise<unknown>;
   blockUser(id : string):Promise<void>;
   blockEmployer(id : string):Promise<void>;
 }

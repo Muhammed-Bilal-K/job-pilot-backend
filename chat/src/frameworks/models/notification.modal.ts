@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Types } from 'mongoose';
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 interface Notification extends Document {
   user_id?: Types.ObjectId;
@@ -6,14 +6,20 @@ interface Notification extends Document {
   message: string;
 }
 
-const notificationSchema = new Schema<Notification>({
-  user_id: { type: Types.ObjectId, ref: 'User' },
-  reciever_id: {
-    type: String,
+const notificationSchema = new Schema<Notification>(
+  {
+    user_id: { type: Types.ObjectId, ref: "User" },
+    reciever_id: {
+      type: String,
+    },
+    message: String,
   },
-  message: String,
-});
+  { timestamps: true }
+);
 
-const NotificationModel = mongoose.model<Notification>('Notification', notificationSchema);
+const NotificationModel = mongoose.model<Notification>(
+  "Notification",
+  notificationSchema
+);
 
 export default NotificationModel;

@@ -11,8 +11,6 @@ class JobRepository implements IJobRepository {
 
   public async jobCreateData(data: IJobCreateRequest): Promise<any> {
     try {
-      console.log(data);
-
       const job = new jobModel({
         company: data.company,
         jobTitle: data.jobTitle.toLocaleLowerCase(),
@@ -106,7 +104,6 @@ class JobRepository implements IJobRepository {
         // job = await jobModel.find({}).populate("company").skip((currentPage - 1) * limit).limit(limit);
         job = await jobModel.find({}).populate("company");
         totalJobsCount = await jobModel.countDocuments({});
-        console.log(totalJobsCount);
       }
 
       const totalPages = Math.ceil(totalJobsCount! / limit);
@@ -121,10 +118,10 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async CompanyData(): Promise<any> {
+  public async companyData(): Promise<any> {
     try {
       const company = await CompanyModel.find({});
-      console.log(company);
+
       return company;
     } catch (error) {
       throw error;
@@ -156,7 +153,7 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async Applicant(id: string): Promise<unknown> {
+  public async applicant(id: string): Promise<unknown> {
     try {
       const job = await ApplicationModel.find({ user: id })
         .populate({
@@ -170,7 +167,7 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async AuthUserById(id: string): Promise<unknown> {
+  public async authUserById(id: string): Promise<unknown> {
     try {
       const job = await UserModel.findOne({ _id: id })
         .populate({ path: "favoriteJobs", populate: { path: "company" } })
@@ -181,7 +178,7 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async MakeFavoriteJob(id: string, JobId: string): Promise<void> {
+  public async makeFavoriteJob(id: string, JobId: string): Promise<void> {
     try {
       const user = await UserModel.findById(id);
 
@@ -201,10 +198,8 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async GetPreferredJobs(preferedJobList: any): Promise<unknown> {
+  public async getPreferredJobs(preferedJobList: any): Promise<unknown> {
     try {
-      console.log(preferedJobList);
-
       if (!preferedJobList) {
         throw new Error("Preferred job titles are required");
       }
@@ -213,15 +208,14 @@ class JobRepository implements IJobRepository {
         .split(",")
         .map((keyword: string) => keyword.trim());
 
-      console.log(keywords);
-      const jobs = await jobModel.find({
-        $or: [
-          { jobTitle: { $regex: keywords.join("|"), $options: "i" } },
-          { tags: { $regex: keywords.join("|"), $options: "i" } },
-        ],
-      }).populate("company");
-
-      console.log(jobs);
+      const jobs = await jobModel
+        .find({
+          $or: [
+            { jobTitle: { $regex: keywords.join("|"), $options: "i" } },
+            { tags: { $regex: keywords.join("|"), $options: "i" } },
+          ],
+        })
+        .populate("company");
 
       return jobs;
     } catch (error) {
@@ -230,7 +224,7 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async JobListByUser(id: string): Promise<unknown> {
+  public async jobListByUser(id: string): Promise<unknown> {
     try {
       const jobs = await ApplicationModel.find({ job: id })
         .populate("user")
@@ -241,7 +235,42 @@ class JobRepository implements IJobRepository {
     }
   }
 
-  public async JobDetailsofCompany(email: string): Promise<unknown> {
+  public async jobAppliedUserDetail(
+    id: string,
+    jobId: string
+  ): Promise<unknown> {
+    try {
+      const jobs = await ApplicationModel.findOne({ user: id, job: jobId })
+        .populate("user")
+        .populate("job");
+
+      return jobs;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async userShortListByValid(
+    id: string,
+    jobId: string
+  ): Promise<unknown> {
+    try {
+      const jobs = await ApplicationModel.updateOne(
+        { user: id, job: jobId },
+        {
+          $set: {
+            shortlisted: true,
+          },
+        }
+      );
+      return jobs;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  public async jobDetailsofCompany(email: string): Promise<unknown> {
     try {
       // Find the company using the email
       const company = await CompanyModel.findOne({ email: email });

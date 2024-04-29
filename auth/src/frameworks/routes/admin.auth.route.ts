@@ -50,14 +50,14 @@ router.put(
 router.put(
   "/employer-verify-success/:id",
   (req: Request, res: Response, next: NextFunction) => {
-    adminAuthController.DoneVerify(req, res, next);
+    adminAuthController.doneVerify(req, res, next);
   }
 );
 
 router.put(
   "/employer-verify-denied/:id",
   (req: Request, res: Response, next: NextFunction) => {
-    adminAuthController.DeniedVerify(req, res, next);
+    adminAuthController.deniedVerify(req, res, next);
   }
 );
 

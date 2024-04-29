@@ -10,9 +10,9 @@ class UserController {
     }
   
   
-    public async Profile(req: Request, res: Response, next: NextFunction){
+    public async profile(req: Request, res: Response, next: NextFunction){
       try {
-          const token = await this.userUsecase.Profile(req.body);
+          const token = await this.userUsecase.profile(req.body);
   
           res.status(200).json({
             success: true,

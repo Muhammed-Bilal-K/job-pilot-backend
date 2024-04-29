@@ -8,8 +8,8 @@ interface IAdminAuthUsecase {
     deleteUser(id : string) : Promise<void>;
     getPlanDetails():Promise<any>;
     editSubscription(id : any , planData : any) : Promise<void>;
-    DoneVerify(id : string) : Promise<void>;
-    DeniedVerify(id : string) : Promise<void>;
+    doneVerify(id : string) : Promise<void>;
+    deniedVerify(id : string) : Promise<void>;
     
 }
 

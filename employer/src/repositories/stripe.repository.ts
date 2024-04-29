@@ -34,7 +34,7 @@ class StripeRepository {
         }
       );
 
-      await this.updateStripeCustomerId(companyId, session.id);
+      await this.updateStripeCustomerId(companyId, session.id , plan._id);
 
       return session;
     } catch (err) {
@@ -42,10 +42,10 @@ class StripeRepository {
     }
   }
 
-  async updateStripeCustomerId(companyId: string, stripeId: string) {
+  async updateStripeCustomerId(companyId: string, stripeId: string , planId : string) {
     const currentDateIndia = moment().tz('Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss.SSS');
     try {
-      await AuthModel.findByIdAndUpdate(companyId, { stripeCustomerId: stripeId , stripePurchaseDate : currentDateIndia});
+      await AuthModel.findByIdAndUpdate(companyId, { stripeCustomerId: stripeId , stripePurchaseDate : currentDateIndia , planId : planId});
     } catch (err) {
       throw err;
     }

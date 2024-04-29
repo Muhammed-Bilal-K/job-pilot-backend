@@ -9,8 +9,8 @@ class UserUsecase implements IUserUsecase {
         this.userRepository = employerRepository;
     }
 
-    public async Profile(data : any){     
-        const user = await this.userRepository.Profile(data);
+    public async profile(data : any){     
+        const user = await this.userRepository.profile(data);
     }
 
     public async specificUser(id: string) {

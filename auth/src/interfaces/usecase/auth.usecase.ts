@@ -13,12 +13,12 @@ interface IAuthUsecase {
   register(userData: IRegisterRequest): Promise<any>;
   socialAuth(data: IAuth): Promise<any>;
   activateUser(data: IActivationRequest): Promise<void>;
-  UserByEmail(data : IRequestEmail) : Promise<IAuth>;
-  UpdatePassByEmail(data : InputPass) : Promise<any>;
-  ResendUserOtp(data : IResendOtp) : Promise<string>;
-  CurrentUserData(token : string | undefined) : Promise<IAuth>;
-  ListUsers() : Promise<unknown>;
-  ListEmployers() : Promise<unknown>;
+  userByEmail(data : IRequestEmail) : Promise<IAuth>;
+  updatePassByEmail(data : InputPass) : Promise<any>;
+  resendUserOtp(data : IResendOtp) : Promise<string>;
+  currentUserData(token : string | undefined) : Promise<IAuth>;
+  listUsers() : Promise<unknown>;
+  listEmployers() : Promise<unknown>;
   blockUser(id : string) : Promise<void>;
   blockEmployer(id : string) : Promise<void>;
 }

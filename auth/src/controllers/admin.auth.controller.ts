@@ -67,11 +67,11 @@ class AdminAuthcontroller {
     }
   }
 
-  public async DoneVerify(req: Request, res: Response, next: NextFunction) {
+  public async doneVerify(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const admin = await this.adminAuthUsecase.DoneVerify(id);
+      const admin = await this.adminAuthUsecase.doneVerify(id);
 
       res.status(200).json({
         status: true,
@@ -82,11 +82,11 @@ class AdminAuthcontroller {
     }
   }
 
-  public async DeniedVerify(req: Request, res: Response, next: NextFunction) {
+  public async deniedVerify(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const admin = await this.adminAuthUsecase.DeniedVerify(id);
+      const admin = await this.adminAuthUsecase.deniedVerify(id);
 
       res.status(200).json({
         status: true,

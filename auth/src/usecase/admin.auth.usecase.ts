@@ -76,9 +76,9 @@ class AdminAuthUsecase implements IAdminAuthUsecase {
     }  
   }
   
-  public async DoneVerify(id : string){
+  public async doneVerify(id : string){
     try {
-      const admin = await this.adminAuthRepository.VerifyUser(id);
+      const admin = await this.adminAuthRepository.verifyUser(id);
 
       return admin;
     } catch (error) {
@@ -86,9 +86,9 @@ class AdminAuthUsecase implements IAdminAuthUsecase {
     }  
   }
 
-  public async DeniedVerify(id : string){
+  public async deniedVerify(id : string){
     try {
-      const admin = await this.adminAuthRepository.DeniedUser(id);
+      const admin = await this.adminAuthRepository.deniedUser(id);
 
       return admin;
     } catch (error) {

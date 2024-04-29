@@ -7,9 +7,9 @@ import SocketIORepository from "../src/repositories/socketRepository";
 
 const server = http.createServer(app);
 new SocketIORepository(server);
-// setTimeout(() => {
-//   startListening();
-// }, 20000);
+setTimeout(() => {
+  startListening();
+}, 20000);
 
 connectDb();
 

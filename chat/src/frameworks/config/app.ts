@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import conversationRouter from "../routes/conversation.route";
 import messageRouter from "../routes/message.route";
+import notificationRouter from "../routes/notification.route";
 import { ErrorMiddleware } from '@validation-pilot/common';
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 // routes
 app.use('/api/v5/chat/conversation', conversationRouter);
 app.use('/api/v5/chat/message', messageRouter);
+app.use('/api/v5/chat/notification', notificationRouter);
 
 // unknown route
 app.all("*", (req: Request, res: Response, next: NextFunction) => {

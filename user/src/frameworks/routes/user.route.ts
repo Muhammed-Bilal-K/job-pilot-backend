@@ -13,7 +13,7 @@ const router = express.Router();
 router.post(
     "/profile", 
     (req: Request, res: Response, next: NextFunction) =>
-    userController.Profile(req,res,next)
+    userController.profile(req,res,next)
   );
 
   router.get(

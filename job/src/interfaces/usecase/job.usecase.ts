@@ -12,12 +12,14 @@ interface IJobUsecase {
   companyDetail(): Promise<any>;
   jobApply(data: IJobAppply): Promise<unknown>;
   allJobApplicant(): Promise<unknown>;
-  Applicant(id: string): Promise<unknown>;
-  AuthUserById(id: string): Promise<unknown>;
-  MakeFavoriteJob(id: string, JobId: string): Promise<void>;
-  GetPreferredJobs(GetPreferredJobs: any): Promise<any>;
-  JobListByUser(id: string): Promise<unknown>;
-  ComapnyJobs(email: string): Promise<unknown>;
+  applicant(id: string): Promise<unknown>;
+  authUserById(id: string): Promise<unknown>;
+  makeFavoriteJob(id: string, JobId: string): Promise<void>;
+  getPreferredJobs(GetPreferredJobs: any): Promise<any>;
+  jobListByUser(id: string): Promise<unknown>;
+  jobAppliedUserDetail(id: string , jobId : string): Promise<unknown>;
+  userShortListByValid(id: string , jobId : string): Promise<unknown>;
+  comapnyJobs(email: string): Promise<unknown>;
 }
 
 export default IJobUsecase;

@@ -32,37 +32,49 @@ router.get(
 router.get(
   "/preferred",
   (req: Request, res: Response, next: NextFunction) =>
-    jobController.GetPreferredJobs(req, res, next)
+    jobController.getPreferredJobs(req, res, next)
 );
 
 router.get(
   "/applicant/:id",
   (req: Request, res: Response, next: NextFunction) =>
-    jobController.Applicant(req, res, next)
+    jobController.applicant(req, res, next)
 );
 
 router.get(
   "/auth-user-by-id/:id",
   (req: Request, res: Response, next: NextFunction) =>
-    jobController.AuthUserById(req, res, next)
+    jobController.authUserById(req, res, next)
 );
 
 router.put(
   "/make-favorite-job/:id",
   (req: Request, res: Response, next: NextFunction) =>
-    jobController.MakeFavoriteJob(req, res, next)
+    jobController.makeFavoriteJob(req, res, next)
 );
 
 router.get(
   "/job-list-specific-user/:id",
   (req: Request, res: Response, next: NextFunction) =>
-    jobController.CompanyJobByUser(req, res, next)
+    jobController.companyJobByUser(req, res, next)
+);
+
+router.get(
+  "/job-applied-user-detail/:id/:jobId",
+  (req: Request, res: Response, next: NextFunction) =>
+    jobController.jobAppliedUser(req, res, next)
+);
+
+router.put(
+  "/user-shortlisted/:id/:jobId",
+  (req: Request, res: Response, next: NextFunction) =>
+    jobController.userShortListed(req, res, next)
 );
 
 router.get(
   "/list-jobs-company/:email",
   (req: Request, res: Response, next: NextFunction) =>
-    jobController.ComapnyJobs(req, res, next)
+    jobController.comapnyJobs(req, res, next)
 );
 
 router.post("/apply", (req: Request, res: Response, next: NextFunction) => {

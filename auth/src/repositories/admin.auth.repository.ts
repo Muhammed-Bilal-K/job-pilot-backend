@@ -86,7 +86,7 @@ class AdminAuthRepository implements IAdminAuthRepository {
     }
   }
 
-  public async VerifyUser(id: string): Promise<void> {
+  public async verifyUser(id: string): Promise<void> {
     try {
       const deletionResult = await AuthModel.updateOne(
         { _id: id },
@@ -99,7 +99,7 @@ class AdminAuthRepository implements IAdminAuthRepository {
     }
   }
 
-  public async DeniedUser(id: string): Promise<void> {
+  public async deniedUser(id: string): Promise<void> {
     try {
       const deletionResult = await AuthModel.updateOne(
         { _id: id },

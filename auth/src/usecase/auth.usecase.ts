@@ -32,6 +32,7 @@ class AuthUsecase implements IAuthUsecase {
     this.tuser = null;
   }
 
+  // user registeration
   public async register(userData: IRegisterRequest) {
     if (userData.password !== userData.confirmpassword) {
       throw new Error("Password not match");
@@ -72,6 +73,7 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
+  //activate the user
   public async activateUser(data: IActivationRequest) {
     try {
       const newUser = await this.jwt.verifyActivationCode(data);
@@ -97,6 +99,7 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
+  //user login
   public async login(data: ILoginRequest) {
     try {
       const user = await this.getUserByEmail(data.email);
@@ -126,7 +129,8 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
-  public async UserByEmail(data: IRequestEmail) {
+  //getting user using by email
+  public async userByEmail(data: IRequestEmail) {
     try {
       const existEmail = await this.getUserByEmail(data.email);
       if (!existEmail) {
@@ -203,7 +207,7 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
-  public async UpdatePassByEmail(data: InputPass) {
+  public async updatePassByEmail(data: InputPass) {
     try {
       const existEmail = await this.getUserByEmail(data.email);
       if (!existEmail) {
@@ -220,7 +224,7 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
-  public async CurrentUserData(data: string | undefined) {
+  public async currentUserData(data: string | undefined) {
     try {
       const userData = await this.jwt.verifyForCurr(data);
 
@@ -233,9 +237,9 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
-  public async ListUsers() {
+  public async listUsers() {
     try {
-      const user = await this.authRepository.ListUsers();
+      const user = await this.authRepository.listUsers();
 
       return user as IAuth;
     } catch (error) {
@@ -254,9 +258,9 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
-  public async ListEmployers() {
+  public async listEmployers() {
     try {
-      const user = await this.authRepository.ListEmployers();
+      const user = await this.authRepository.listEmployers();
 
       return user as IAuth;
     } catch (error) {
@@ -275,7 +279,7 @@ class AuthUsecase implements IAuthUsecase {
     }
   }
 
-  public async ResendUserOtp(dataE: IResendOtp) {
+  public async resendUserOtp(dataE: IResendOtp) {
     try {
       const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
       const token = await this.jwt.createActivationCode(

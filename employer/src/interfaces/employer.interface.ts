@@ -8,6 +8,20 @@ export interface IRegisterRequest {
     isBlock? : boolean;
   } 
 
+  export interface ICompanyInfo {
+    companyId: string;
+    organizationType: string;
+    industryType: string;
+    teamSize: string;
+    yearOfEstablished: string;
+    companyWebsiteUrl: string;
+    country: string;
+    state: string;
+    companyVision: string;
+    socialLinks1: string;
+    socialLinks2: string;
+  }
+
   export interface ICompanyInfoCreate {
     companyId: string;
     name: string;

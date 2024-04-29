@@ -81,9 +81,9 @@ class AuthController {
     }
   }
 
-  public async UserByEmail(req: Request, res: Response, next: NextFunction) {
+  public async userByEmail(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.authUsecase.UserByEmail(req.body);
+      const user = await this.authUsecase.userByEmail(req.body);
       
       console.log(user, 'from UserByEmail');
       
@@ -98,9 +98,9 @@ class AuthController {
     }
   }
 
-  public async UpdatePassByEmail(req: Request, res: Response, next: NextFunction) {
+  public async updatePassByEmail(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.authUsecase.UpdatePassByEmail(req.body);
+      const user = await this.authUsecase.updatePassByEmail(req.body);
       
       res.status(200).json({
         success: true,
@@ -111,9 +111,9 @@ class AuthController {
     }
   }
 
-  public async ResendUserOtp(req: Request, res: Response, next: NextFunction) {
+  public async resendUserOtp(req: Request, res: Response, next: NextFunction) {
     try {
-      const token = await this.authUsecase.ResendUserOtp(req.body);
+      const token = await this.authUsecase.resendUserOtp(req.body);
       
       res.status(200).json({
         success: true,
@@ -125,12 +125,12 @@ class AuthController {
     }
   }
 
-  public async CurrentUserData(req: Request, res: Response, next: NextFunction) {
+  public async currentUserData(req: Request, res: Response, next: NextFunction) {
     try {
 
       const token = req.headers.authorization;
 
-      const user = await this.authUsecase.CurrentUserData(token);
+      const user = await this.authUsecase.currentUserData(token);
       
       res.status(200).json({
         success: true,
@@ -142,10 +142,10 @@ class AuthController {
     }
   }
 
-  public async ListUserData(req: Request, res: Response, next: NextFunction) {
+  public async listUserData(req: Request, res: Response, next: NextFunction) {
     try {
 
-      const user = await this.authUsecase.ListUsers();
+      const user = await this.authUsecase.listUsers();
       
       res.status(200).json({
         success: true,
@@ -174,10 +174,10 @@ class AuthController {
     }
   }
 
-  public async ListEmployerData(req: Request, res: Response, next: NextFunction) {
+  public async listEmployerData(req: Request, res: Response, next: NextFunction) {
     try {
 
-      const user = await this.authUsecase.ListEmployers();
+      const user = await this.authUsecase.listEmployers();
       
       res.status(200).json({
         success: true,

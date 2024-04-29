@@ -1,7 +1,10 @@
 import { Exchanges } from "../frameworks/rabbitmq/exchanges";
 import QueuePublisher from "../frameworks/rabbitmq/publisher";
 import { Topics } from "../frameworks/rabbitmq/topics";
-import { ICompanyInfoCreate } from "../interfaces/employer.interface";
+import {
+  ICompanyInfo,
+  ICompanyInfoCreate,
+} from "../interfaces/employer.interface";
 import IEmpoloyerRepository from "../interfaces/repositories/employer.repositories";
 import IEmployerUsecase from "../interfaces/usecase/employer.usecase";
 
@@ -47,9 +50,35 @@ class EmployerUsecase implements IEmployerUsecase {
     }
   }
 
+  public async updateEmploInfoData(CompanyData: ICompanyInfo) {
+    try {
+      const employer = await this.employerRepository.companyInfoDetailRemain(
+        CompanyData
+      );
+
+      return employer;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async allAuthInfo() {
     try {
       const company = await this.employerRepository.find();
+
+      return company;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async allEmployerInfo(selectedIndustries: any, currentPage: any) {
+    try {
+      const company = await this.employerRepository.findEmployersDetails(
+        selectedIndustries,
+        currentPage
+      );
 
       return company;
     } catch (error) {

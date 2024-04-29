@@ -4,7 +4,7 @@ import AuthModel from "../frameworks/models/auth.model";
 class EmployerRepository implements IEmployerRepository {
   constructor() {}
 
-  public async Profile(data: any): Promise<any> {
+  public async profile(data: any): Promise<any> {
     try {
       const updatedProfile = await AuthModel.updateOne(
         { _id: data.userId },

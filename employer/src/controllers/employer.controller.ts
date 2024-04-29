@@ -14,13 +14,31 @@ class EmployerController {
     this.stripeUsecase = stripeUsecase;
   }
 
-  public async Save(req: Request, res: Response, next: NextFunction) {
+  public async save(req: Request, res: Response, next: NextFunction) {
     try {
       const employer = await this.employerUsecase.saveData(req.body);
 
       res.status(200).json({
         success: true,
         message: "Company Data saved successfully.",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async updateEmploInfo(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const employer = await this.employerUsecase.updateEmploInfoData(req.body);
+
+      res.status(200).json({
+        success: true,
+        message: "Company Data saved successfully.",
+        companyInfo: employer,
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, error.statusCode || 500));
@@ -41,7 +59,28 @@ class EmployerController {
     }
   }
 
-  public async Subscription(req: Request, res: Response, next: NextFunction) {
+  public async allEmployerInfo(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const {
+        selectedIndustries,
+        currentPage,
+      } = req.query;
+
+      const employer = await this.employerUsecase.allEmployerInfo(selectedIndustries,currentPage);
+
+      res.status(200).json({
+        success: true,
+        message: "Company Data listed successfully.",
+        AllEmployers: employer.company,
+        current : employer.totalPages
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async subscription(req: Request, res: Response, next: NextFunction) {
     try {
       const plans = await this.stripeUsecase.createPlans(req.body);
       res.status(200).json({
@@ -52,7 +91,7 @@ class EmployerController {
       return next(new ErrorHandler(error.message, error.statusCode || 500));
     }
   }
-  
+
   public async getCompanyInfo(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;

@@ -2,6 +2,7 @@ import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
 import MessageRepository from "../repositories/message.respository";
 import ConversationModel from "../frameworks/models/conversation.modal";
+import NotificationRepository from "./notification.repository";
 
 interface User {
   userId: string;
@@ -80,7 +81,7 @@ class SocketIORepository {
           console.log(senderId);
           console.log(receiverId);
           console.log(text);
-          
+
           const user = this.getUser(receiverId);
           if (user) {
             console.log(user, "from sendmessage");
@@ -91,23 +92,24 @@ class SocketIORepository {
             try {
               await ConversationModel.findOneAndUpdate(
                 {
-                  members: { $all: [senderId, receiverId] }
+                  members: { $all: [senderId, receiverId] },
                 },
                 { latestMessage: text },
                 { new: true }
               );
-            
             } catch (error) {
               console.log(error);
             }
           } else {
             await ConversationModel.findOneAndUpdate(
               {
-                members: { $all: [senderId, receiverId] }
+                members: { $all: [senderId, receiverId] },
               },
               { latestMessage: text },
               { new: true }
             );
+            const notification = new NotificationRepository();
+            await notification.create(receiverId, senderId, text);
             console.log("no user");
           }
         }
@@ -122,14 +124,15 @@ class SocketIORepository {
   }
 
   private addUser(userId: string, socketId: string): void {
-    const existingUserIndex = this.users.findIndex(user => user.userId === userId)
+    const existingUserIndex = this.users.findIndex(
+      (user) => user.userId === userId
+    );
     if (existingUserIndex !== -1) {
-      const existingUser = this.users[existingUserIndex]
-      existingUser.socketId = socketId
+      const existingUser = this.users[existingUserIndex];
+      existingUser.socketId = socketId;
     } else {
-      this.users.push({userId, socketId});
+      this.users.push({ userId, socketId });
     }
-
   }
 
   private removeUser(socketId: string): void {

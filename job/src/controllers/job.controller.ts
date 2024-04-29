@@ -23,7 +23,6 @@ class JobController {
 
   public async jobList(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.query, "from job list");
       const {
         selectedIndustries,
         selectedSalaryRange,
@@ -39,8 +38,6 @@ class JobController {
         selectedSort,
         currentPage
       );
-
-      // console.log(job, 'from');
 
       res.status(200).json({
         success: true,
@@ -71,11 +68,11 @@ class JobController {
     }
   }
 
-  public async Applicant(req: Request, res: Response, next: NextFunction) {
+  public async applicant(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const job = await this.jobUsecase.Applicant(id);
+      const job = await this.jobUsecase.applicant(id);
 
       res.status(200).json({
         success: true,
@@ -87,11 +84,11 @@ class JobController {
     }
   }
 
-  public async AuthUserById(req: Request, res: Response, next: NextFunction) {
+  public async authUserById(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const job = await this.jobUsecase.AuthUserById(id);
+      const job = await this.jobUsecase.authUserById(id);
 
       res.status(200).json({
         success: true,
@@ -103,7 +100,7 @@ class JobController {
     }
   }
 
-  public async MakeFavoriteJob(
+  public async makeFavoriteJob(
     req: Request,
     res: Response,
     next: NextFunction
@@ -112,7 +109,7 @@ class JobController {
       const { id } = req.params;
       const { JobId } = req.body;
 
-      const job = await this.jobUsecase.MakeFavoriteJob(id, JobId);
+      const job = await this.jobUsecase.makeFavoriteJob(id, JobId);
 
       res.status(200).json({
         success: true,
@@ -123,7 +120,7 @@ class JobController {
     }
   }
 
-  public async GetPreferredJobs(
+  public async getPreferredJobs(
     req: Request,
     res: Response,
     next: NextFunction
@@ -131,10 +128,10 @@ class JobController {
     try {
       const { preferedJobList } = req.query;
 
-      console.log(preferedJobList);
+      
       
 
-      const jobs = await this.jobUsecase.GetPreferredJobs(preferedJobList);
+      const jobs = await this.jobUsecase.getPreferredJobs(preferedJobList);
 
       res.status(200).json({
         success: true,
@@ -146,7 +143,7 @@ class JobController {
     }
   }
 
-  public async CompanyJobByUser(
+  public async companyJobByUser(
     req: Request,
     res: Response,
     next: NextFunction
@@ -154,7 +151,7 @@ class JobController {
     try {
       const { id } = req.params;
 
-      const job = await this.jobUsecase.JobListByUser(id);
+      const job = await this.jobUsecase.jobListByUser(id);
 
       res.status(200).json({
         success: true,
@@ -166,11 +163,52 @@ class JobController {
     }
   }
 
-  public async ComapnyJobs(req: Request, res: Response, next: NextFunction) {
+  public async jobAppliedUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { id } = req.params;
+      const { jobId } = req.params;
+
+      const job = await this.jobUsecase.jobAppliedUserDetail(id,jobId);
+
+      res.status(200).json({
+        success: true,
+        message: "job listed successfull.",
+        jobs: job,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async userShortListed(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { id } = req.params;
+      const { jobId } = req.params;
+
+      const job = await this.jobUsecase.userShortListByValid(id,jobId);
+
+      res.status(200).json({
+        success: true,
+        message: "User Shortlisted successfull."
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    }
+  }
+
+  public async comapnyJobs(req: Request, res: Response, next: NextFunction) {
     try {
       const { email } = req.params;
 
-      const job = await this.jobUsecase.ComapnyJobs(email);
+      const job = await this.jobUsecase.comapnyJobs(email);
 
       res.status(200).json({
         success: true,

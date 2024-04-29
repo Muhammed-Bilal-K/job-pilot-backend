@@ -37,29 +37,29 @@ router.post("/login", (req: Request, res: Response, next: NextFunction) =>
 router.post(
   "/forget-password",
   (req: Request, res: Response, next: NextFunction) =>
-    authController.UserByEmail(req, res, next)
+    authController.userByEmail(req, res, next)
 );
 
 router.post(
   "/update-password",
   (req: Request, res: Response, next: NextFunction) =>
-    authController.UpdatePassByEmail(req, res, next)
+    authController.updatePassByEmail(req, res, next)
 );
 
 router.post("/resend-otp", (req: Request, res: Response, next: NextFunction) =>
-  authController.ResendUserOtp(req, res, next)
+  authController.resendUserOtp(req, res, next)
 );
 
 router.get(
   "/current-user-data",
   (req: Request, res: Response, next: NextFunction) =>
-    authController.CurrentUserData(req, res, next)
+    authController.currentUserData(req, res, next)
 );
 
 router.get(
   "/list-all-user",
   (req: Request, res: Response, next: NextFunction) =>
-    authController.ListUserData(req, res, next)
+    authController.listUserData(req, res, next)
 );
 
 router.put("/user/:id", (req: Request, res: Response, next: NextFunction) =>
@@ -69,7 +69,7 @@ router.put("/user/:id", (req: Request, res: Response, next: NextFunction) =>
 router.get(
   "/list-all-employer",
   (req: Request, res: Response, next: NextFunction) =>
-    authController.ListEmployerData(req, res, next)
+    authController.listEmployerData(req, res, next)
 );
 
 router.put("/employer/:id", (req: Request, res: Response, next: NextFunction) =>

@@ -7,6 +7,7 @@ interface IAuth extends Document {
   email: string;
   role: string;
   stripeCustomerId: string;
+  planId: string;
   stripePurchaseDate : Date;
 }
 
@@ -18,6 +19,7 @@ const AuthSchema: Schema<IAuth> = new Schema<IAuth>(
     email: { type: String, unique: true, required: true },
     role: { type: String, default: "employer" },
     stripeCustomerId: { type: String, default: "None" },
+    planId: { type: String, default: "" },
     stripePurchaseDate : { type : Date , default : new Date }
   },
   {

@@ -51,9 +51,9 @@ class JobUsecase implements IJobUsecase {
     }
   }
 
-  public async Applicant(id: string) {
+  public async applicant(id: string) {
     try {
-      const job = await this.jobRepository.Applicant(id);
+      const job = await this.jobRepository.applicant(id);
 
       return job;
     } catch (error) {
@@ -61,9 +61,9 @@ class JobUsecase implements IJobUsecase {
     }
   }
 
-  public async AuthUserById(id: string) {
+  public async authUserById(id: string) {
     try {
-      const job = await this.jobRepository.AuthUserById(id);
+      const job = await this.jobRepository.authUserById(id);
 
       return job;
     } catch (error) {
@@ -71,18 +71,18 @@ class JobUsecase implements IJobUsecase {
     }
   }
 
-  public async MakeFavoriteJob(id: string , JobId :string) {
+  public async makeFavoriteJob(id: string , JobId :string) {
     try {
-      const job = await this.jobRepository.MakeFavoriteJob(id,JobId);
+      const job = await this.jobRepository.makeFavoriteJob(id,JobId);
 
     } catch (error) {
       throw error;
     }
   }
 
-  public async GetPreferredJobs(preferedJobList: any) {
+  public async getPreferredJobs(preferedJobList: any) {
     try {
-      const jobs = await this.jobRepository.GetPreferredJobs(preferedJobList);
+      const jobs = await this.jobRepository.getPreferredJobs(preferedJobList);
        
       return jobs
     } catch (error) {
@@ -90,9 +90,9 @@ class JobUsecase implements IJobUsecase {
     }
   }
 
-  public async JobListByUser(id: string) {
+  public async jobListByUser(id: string) {
     try {
-      const job = await this.jobRepository.JobListByUser(id);
+      const job = await this.jobRepository.jobListByUser(id);
 
       return job;
     } catch (error) {
@@ -100,9 +100,29 @@ class JobUsecase implements IJobUsecase {
     }
   }
 
-  public async ComapnyJobs(email: string) {
+  public async jobAppliedUserDetail(id: string , jobId : string) {
     try {
-      const job = await this.jobRepository.JobDetailsofCompany(email);
+      const job = await this.jobRepository.jobAppliedUserDetail(id , jobId );
+
+      return job;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async userShortListByValid(id: string , jobId : string) {
+    try {
+      const job = await this.jobRepository.userShortListByValid(id , jobId );
+
+      return job;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async comapnyJobs(email: string) {
+    try {
+      const job = await this.jobRepository.jobDetailsofCompany(email);
 
       return job;
     } catch (error) {
@@ -112,7 +132,7 @@ class JobUsecase implements IJobUsecase {
 
   public async companyDetail() {
     try {
-      const job = await this.jobRepository.CompanyData();
+      const job = await this.jobRepository.companyData();
 
       return job;
     } catch (error) {

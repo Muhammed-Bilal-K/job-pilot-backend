@@ -7,8 +7,8 @@ interface IAdminAuthRepository {
   editSubscription(id : any , planData : any) : Promise<void>;
   deleteSubscription(id : string) : Promise<void>;
   deleteUser(id : string) : Promise<void>;
-  VerifyUser(id : string) : Promise<void>;
-  DeniedUser(id : string) : Promise<void>;
+  verifyUser(id : string) : Promise<void>;
+  deniedUser(id : string) : Promise<void>;
 }
 
 export default IAdminAuthRepository;

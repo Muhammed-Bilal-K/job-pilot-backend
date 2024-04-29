@@ -38,7 +38,7 @@ class AuthRepository implements IAuthRepository {
     }
   }
 
-  public async ListUsers(): Promise<unknown> {
+  public async listUsers(): Promise<unknown> {
     try {
       const user = await authModel.find({ role: "candidate" });
 
@@ -69,7 +69,7 @@ class AuthRepository implements IAuthRepository {
     }
   }
 
-  public async ListEmployers(): Promise<unknown> {
+  public async listEmployers(): Promise<unknown> {
     try {
       const user = await authModel.find({ role: "employer" });
 
@@ -107,9 +107,6 @@ class AuthRepository implements IAuthRepository {
         throw new Error("IUser not found");
       }
       const isPasswordMatched = bcryptjs.compareSync(password, user.password);
-      // if (!isPasswordMatched) {
-      //   throw new Error("password doesn't matched");
-      // }
 
       return isPasswordMatched;
     } catch (error) {
