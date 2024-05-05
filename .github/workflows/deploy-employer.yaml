@@ -1,0 +1,26 @@
+name: deploy-employer
+
+on: 
+ push:
+   branches:
+     - master
+   paths:
+     - 'employer/**'
+     
+jobs: 
+ build:
+   runs-on: ubuntu-latest
+   steps: 
+     - name: Checkout code
+       uses: actions/checkout@v2
+     - name: Build Docker Image
+       run: |
+         cd employer
+         docker build -t mhdbilal/jobpilot-employer .
+     - name: Login to Docker Hub
+       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+       env:
+         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+     - name: Push Docker Image
+       run: docker push mhdbilal/jobpilot-employer
