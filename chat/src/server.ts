@@ -16,5 +16,7 @@ connectDb();
 // create server
 const PORT = process.env.PORT || 3004;
 server.listen(PORT, () => {
+  console.log('startup from chat');
+  
   console.log(`Server running ${PORT} | Chat`);
 });
