@@ -11,7 +11,6 @@ connectDb();
 // create server
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
-  console.log('updated');
-  
+  console.log('Job updated...');
   console.log(`Server running ${PORT} | Job`);
 });
