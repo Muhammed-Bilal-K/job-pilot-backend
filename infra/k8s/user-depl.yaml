@@ -14,18 +14,13 @@ spec:
     spec:
       containers:
         - name: user
-          image: mhdbilal/user
+          image: mhdbilal/jobpilot-user
           env:
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: user-mongo
                   key: MONGO_URI
-            - name: RABBIT_MQ
-              valueFrom:
-                secretKeyRef:
-                  name: rabbit-mq
-                  key: RABBIT_MQ 
 ---
 apiVersion: v1
 kind: Service

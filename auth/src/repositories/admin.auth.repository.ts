@@ -23,7 +23,7 @@ class AdminAuthRepository implements IAdminAuthRepository {
     return admin;
   }
 
-  public async editSubscription(id: any, data: any): Promise<any> {
+  public async editSubscription(id: string, data: any): Promise<any> {
     try {
       const subscription = await adminAuthModel.findByIdAndUpdate(
         id,

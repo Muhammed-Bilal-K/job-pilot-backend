@@ -1,10 +1,10 @@
 import { ICreateSubscriptionRequest } from "../admin.auth.interface";
 
 interface IAdminAuthRepository {
-  login(email: string, password: string): Promise<any>;
+  login(email: string, password: string): Promise<unknown>;
   createSubscription(data : ICreateSubscriptionRequest) : Promise<any>;
   getPlanDetails():Promise<any>;
-  editSubscription(id : any , planData : any) : Promise<void>;
+  editSubscription(id : string , planData : any) : Promise<void>;
   deleteSubscription(id : string) : Promise<void>;
   deleteUser(id : string) : Promise<void>;
   verifyUser(id : string) : Promise<void>;

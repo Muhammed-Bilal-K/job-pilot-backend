@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import IAdminAuthUsecase from "../interfaces/usecase/admin.auth.usecase";
 import { ErrorHandler } from '@validation-pilot/common';
 
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
 class AdminAuthcontroller {
   private adminAuthUsecase: IAdminAuthUsecase;
   constructor(adminAuthUsecase: IAdminAuthUsecase) {
@@ -24,8 +28,11 @@ class AdminAuthcontroller {
         token: admin.token,
         admin: admin.admin,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -45,8 +52,11 @@ class AdminAuthcontroller {
         message: "Plan updated successfully",
         plan: admin,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -62,8 +72,11 @@ class AdminAuthcontroller {
         status: true,
         message: "Plan created successfully!",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -77,8 +90,11 @@ class AdminAuthcontroller {
         status: true,
         message: "Plan created successfully!",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -92,8 +108,11 @@ class AdminAuthcontroller {
         status: true,
         message: "Plan created successfully!",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -111,8 +130,11 @@ class AdminAuthcontroller {
         status: true,
         message: "Plan deleted successfully!",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -126,8 +148,11 @@ class AdminAuthcontroller {
         status: true,
         message: "User deleted successfully!",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -139,8 +164,11 @@ class AdminAuthcontroller {
         message: "Listed all plans succesfully!",
         planDetail: admin,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 }

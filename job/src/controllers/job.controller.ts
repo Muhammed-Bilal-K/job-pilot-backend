@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import IJobUsecase from "../interfaces/usecase/job.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
 
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
 class JobController {
   private jobUsecase: IJobUsecase;
   constructor(jobUsecase: IJobUsecase) {
@@ -16,8 +20,11 @@ class JobController {
         success: true,
         message: "job created successfully.",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -45,8 +52,11 @@ class JobController {
         jobs: job.jobs,
         current: job.totalPages,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -63,8 +73,11 @@ class JobController {
         message: "job listed successfull.",
         jobs: job,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -79,8 +92,11 @@ class JobController {
         message: "job listed successfull.",
         jobs: job,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -95,8 +111,11 @@ class JobController {
         message: "job listed successfull.",
         jobs: job,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -115,8 +134,11 @@ class JobController {
         success: true,
         message: "job added favorite.",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -128,18 +150,18 @@ class JobController {
     try {
       const { preferedJobList } = req.query;
 
-      
-      
-
       const jobs = await this.jobUsecase.getPreferredJobs(preferedJobList);
 
       res.status(200).json({
         success: true,
         message: "job added favorite.",
-        preferrefJob:jobs
+        preferrefJob: jobs,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -158,29 +180,31 @@ class JobController {
         message: "job listed successfull.",
         jobs: job,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
-  public async jobAppliedUser(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+  public async jobAppliedUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       const { jobId } = req.params;
 
-      const job = await this.jobUsecase.jobAppliedUserDetail(id,jobId);
+      const job = await this.jobUsecase.jobAppliedUserDetail(id, jobId);
 
       res.status(200).json({
         success: true,
         message: "job listed successfull.",
         jobs: job,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -193,14 +217,17 @@ class JobController {
       const { id } = req.params;
       const { jobId } = req.params;
 
-      const job = await this.jobUsecase.userShortListByValid(id,jobId);
+      const job = await this.jobUsecase.userShortListByValid(id, jobId);
 
       res.status(200).json({
         success: true,
-        message: "User Shortlisted successfull."
+        message: "User Shortlisted successfull.",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -215,8 +242,11 @@ class JobController {
         message: "job listed successfull.",
         jobs: job,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -229,8 +259,11 @@ class JobController {
         message: "job applied successfull.",
         job: job,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -243,8 +276,11 @@ class JobController {
         message: "company details fetched successfull.",
         comInfo: company,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 }

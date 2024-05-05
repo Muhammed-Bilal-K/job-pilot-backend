@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import IAuthUsecase from "../interfaces/usecase/auth.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
 
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
 class AuthController {
   private authUsecase: IAuthUsecase;
   constructor(authUsecase: IAuthUsecase) {
@@ -18,8 +22,11 @@ class AuthController {
           activationToken: token,
           message: "Otp successfully sent to your email address.",
         });
-    } catch (error : any) {
-        return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -31,8 +38,11 @@ class AuthController {
         success: true,
         message: "Account activated successfully",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -54,8 +64,11 @@ class AuthController {
         token: user.token,
         user: user.user,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -76,8 +89,11 @@ class AuthController {
         token: user.token,
         user: user.user,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -93,8 +109,11 @@ class AuthController {
         message: "Email Found Successfully!",
         email: user.email,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -106,8 +125,11 @@ class AuthController {
         success: true,
         message: "Password Updated Successfully!"
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -120,8 +142,11 @@ class AuthController {
         activationToken: token,
         message: "Resend Otp successfully sent to your email address.",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -137,8 +162,11 @@ class AuthController {
         currentUser: user,
         message: "Current User Data fetch successfully",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -152,8 +180,11 @@ class AuthController {
         Users: user,
         message: "Listed User Data fetch successfully",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -169,8 +200,11 @@ class AuthController {
         Users: user,
         message: "Listed User Data fetch successfully",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -184,8 +218,11 @@ class AuthController {
         Users: user,
         message: "Listed User Data fetch successfully",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -201,8 +238,11 @@ class AuthController {
         Users: user,
         message: "Listed User Data fetch successfully",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 }

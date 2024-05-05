@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: job-depl
+  name: chat-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: job
+      app: chat
   template:
     metadata:
       labels:
-        app: job
+        app: chat
     spec:
       containers:
-        - name: job
-          image: mhdbilal/jobpilot-job
+        - name: chat
+          image: mhdbilal/jobpilot-chat
           env:
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
-                  name: job-mongo
+                  name: chat-mongo
                   key: MONGO_URI
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: job-clsip-srv
+  name: chat-clsip-srv
 spec:
   selector:
-    app: job
+    app: chat
   ports:
-    - name: job
+    - name: chat
       protocol: TCP
-      port: 3002
-      targetPort: 3002
+      port: 3004
+      targetPort: 3004

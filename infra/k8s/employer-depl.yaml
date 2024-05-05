@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: employer
-          image: mhdbilal/employer
+          image: mhdbilal/jobpilot-employer
           env:
             - name: MONGO_URI
               valueFrom:
@@ -31,11 +31,6 @@ spec:
                 secretKeyRef:
                   name: payment-publish
                   key: PUBLISHABLE_KEY
-            - name: RABBIT_MQ
-              valueFrom:
-                secretKeyRef:
-                  name: rabbit-mq
-                  key: RABBIT_MQ 
 ---
 apiVersion: v1
 kind: Service

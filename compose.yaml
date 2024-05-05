@@ -36,7 +36,6 @@ services:
       SMTP_PORT: "587"
       SMTP_SERVICE: Gmail
       SMTP_MAIL: bilalcr7juv@gmail.com
-      SMTP_PASS: xqrd drrx xmax yymw
     develop:
       watch:
         - action: sync

@@ -3,10 +3,10 @@ import { ICompanyInfo, ICompanyInfoCreate } from "../employer.interface";
 
 interface IEmployerRepository {
     saveCompanyDetail(data : ICompanyInfoCreate) : Promise<ICompany | null>;
-    companyInfoDetailRemain(data : ICompanyInfo) : Promise<any>;
-    findById( id: string) : Promise<any>;
-    find() : Promise<any>;
-    findEmployersDetails(selectedIndustries : any, currentPage : any) : Promise<any>;
+    companyInfoDetailRemain(data : ICompanyInfo) : Promise<unknown>;
+    findById( id: string) : Promise<unknown>;
+    find() : Promise<unknown>;
+    findEmployersDetails(selectedIndustries : [string], currentPage : string) : Promise<unknown>;
 }
 
 export default IEmployerRepository;

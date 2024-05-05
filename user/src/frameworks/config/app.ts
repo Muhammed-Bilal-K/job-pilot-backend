@@ -13,7 +13,6 @@ app.use(express.json({ limit: "50mb" }));
 // cookie parser
 app.use(cookieParser());
 
-
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: "GET, POST, OPTIONS, PATCH, PUT",

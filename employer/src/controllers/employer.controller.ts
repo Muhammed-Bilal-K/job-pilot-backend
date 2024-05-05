@@ -3,6 +3,10 @@ import IEmployerUsecase from "../interfaces/usecase/employer.usecase";
 import IStripeUsecase from "../interfaces/usecase/stripe.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
 
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
 class EmployerController {
   private employerUsecase: IEmployerUsecase;
   private stripeUsecase: IStripeUsecase;
@@ -22,8 +26,11 @@ class EmployerController {
         success: true,
         message: "Company Data saved successfully.",
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -40,8 +47,11 @@ class EmployerController {
         message: "Company Data saved successfully.",
         companyInfo: employer,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -54,8 +64,11 @@ class EmployerController {
         message: "Company Data saved successfully.",
         AuthInfo: employer,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -75,8 +88,11 @@ class EmployerController {
         AllEmployers: employer.company,
         current : employer.totalPages
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -87,8 +103,11 @@ class EmployerController {
         message: "done",
         url: plans,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -100,8 +119,11 @@ class EmployerController {
         message: "done",
         Company: emplo,
       });
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, error.statusCode || 500));
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 }

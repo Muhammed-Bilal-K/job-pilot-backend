@@ -1,5 +1,11 @@
 import { NextFunction, Response, Request } from "express";
 import { Notificationusecase } from "../usecase/notification.usecase";
+import { ErrorHandler } from "@validation-pilot/common";
+
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
 
 export class Notificationcontoller {
   private notifcationusecase: Notificationusecase;
@@ -17,8 +23,11 @@ export class Notificationcontoller {
         req.body
       );
       res.status(200).json(del);
-    } catch (err) {
-      next(err);
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   
 
@@ -33,8 +42,11 @@ export class Notificationcontoller {
         req.body.id
       );
       res.status(200).json(del);
-    } catch (err) {
-      next(err);
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -48,8 +60,11 @@ export class Notificationcontoller {
         req.body.id
       );
       res.status(del.status).json(del.data);
-    } catch (err) {
-      next(err);
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 
@@ -59,8 +74,11 @@ export class Notificationcontoller {
       
       const del = await this.notifcationusecase.getAllmessages(id);
       res.status(200).json(del);
-    } catch (err) {
-      next(err);
+    } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
+      }
     }
   }
 }

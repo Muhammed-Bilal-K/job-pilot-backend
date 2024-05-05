@@ -5,6 +5,7 @@ import EmployerUsecase from "../../usecase/employer.usecase";
 import StripeUsecase from "../../usecase/stripe.usecase";
 import StripeRepository from "../../repositories/stripe.repository";
 import QueuePublisher from "../rabbitmq/publisher";
+import { authVerify } from '@validation-pilot/common';
 
 const employerRepository = new EmployerRepository();
 const stripeRepository = new StripeRepository();

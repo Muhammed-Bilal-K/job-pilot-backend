@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: mhdbilal/auth
+          image: mhdbilal/jobpilot-auth
           env:
             - name: ACTIVE_SECRET
               valueFrom:
@@ -51,12 +51,6 @@ spec:
                 secretKeyRef:
                   name: smtp-pass
                   key: SMTP_PASS
-            - name: RABBIT_MQ
-              valueFrom:
-                secretKeyRef:
-                  name: rabbit-mq
-                  key: RABBIT_MQ 
-                           
 ---
 apiVersion: v1
 kind: Service

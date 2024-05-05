@@ -15,15 +15,17 @@
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "@validation-pilot/common": "^1.0.5",
+    "@validation-pilot/common": "^1.0.9",
     "amqplib": "^0.10.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.1",
+    "jsonwebtoken": "^9.0.2",
     "moment-timezone": "^0.5.45",
     "mongoose": "^8.2.3",
     "stripe": "^14.22.0",

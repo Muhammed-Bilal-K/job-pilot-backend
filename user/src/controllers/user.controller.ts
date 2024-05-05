@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import IUserUsecase from "../interfaces/usecase/usercandidate.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
 
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
 class UserController {
     private userUsecase: IUserUsecase
     constructor(userUsecase: IUserUsecase,
@@ -19,9 +23,12 @@ class UserController {
             activationToken: token,
             message: "profile updated successfully.",
           });
-      } catch (error : any) {
-          return next(new ErrorHandler(error.message, error.statusCode || 500));
+      } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
       }
+    }
     }
 
     public async specificUser(req: Request, res: Response, next: NextFunction){
@@ -35,9 +42,12 @@ class UserController {
           message: "user details.",
           user: user,
         });
-      } catch (error: any) {
-        return next(new ErrorHandler(error.message, error.statusCode || 500));
+      } catch (error: unknown) {
+      if (error) {
+        const err = error as CustomError;
+        return next(new ErrorHandler(err.message, err.statusCode || 500));
       }
+    }
     }
     
 }

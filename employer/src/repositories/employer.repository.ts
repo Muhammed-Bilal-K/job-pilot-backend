@@ -80,12 +80,12 @@ class EmployerRepository implements IEmployerRepository {
   }
 
   async findEmployersDetails(
-    selectedIndustries: any,
-    currentPage: any
+    selectedIndustries: [string],
+    currPage: string
   ): Promise<any> {
     try {
       let company;
-      currentPage = parseInt(currentPage);
+      let currentPage = parseInt(currPage);
       let totalEmployerCount;
       const limit = 1;
 

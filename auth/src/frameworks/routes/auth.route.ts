@@ -4,7 +4,6 @@ import AuthRepository from "../../repositories/auth.repository";
 import AuthUsecase from "../../usecase/auth.usecase";
 import JwtService from "../utils/jwt";
 import QueuePublisher from "../rabbitmq/publisher";
-import { signinverify } from "../middleware/siginVerify";
 
 const jwt = new JwtService();
 
