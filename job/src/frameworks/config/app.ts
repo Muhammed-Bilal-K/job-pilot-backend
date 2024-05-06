@@ -16,8 +16,8 @@ app.use(cookieParser());
 
 
 const corsOptions = {
-  origin: "http://localhost:5173",
-  methods: "GET, POST, OPTIONS, PATCH, PUT",
+  origin: "https://job-pilot-frontend.vercel.app",
+  methods: "GET, HEAD, POST, OPTIONS, PATCH, PUT , DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
