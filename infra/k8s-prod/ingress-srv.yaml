@@ -53,3 +53,10 @@ spec:
                 name: chat-clsip-srv
                 port:
                   number: 3004
+          - path: /socket.io/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: chat-clsip-srv
+                port:
+                  number: 3004  
