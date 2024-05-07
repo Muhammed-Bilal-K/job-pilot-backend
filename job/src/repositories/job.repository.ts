@@ -46,6 +46,8 @@ class JobRepository implements IJobRepository {
     try {
       let job;
       currentPage = parseInt(currentPage);
+      console.log(currentPage , 'from currentpage');
+      
       let totalJobsCount;
       let sortOption: string | { [key: string]: 1 | -1 } = { createdAt: 1 };
       const limit = 2;
@@ -54,6 +56,9 @@ class JobRepository implements IJobRepository {
         job = await jobModel.find({}).populate("company");
         return { jobs: job, totalPages: 1 };
       }
+
+      console.log(selectedIndustries);
+      
 
       if (
         selectedIndustries ||

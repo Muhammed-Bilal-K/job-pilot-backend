@@ -38,6 +38,9 @@ class JobController {
         currentPage,
       } = req.query;
 
+      console.log(req.query);
+      
+
       const job = await this.jobUsecase.jobList(
         selectedIndustries,
         selectedSalaryRange,

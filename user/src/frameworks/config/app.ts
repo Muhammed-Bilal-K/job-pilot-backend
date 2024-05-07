@@ -14,7 +14,8 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: "https://job-pilot-frontend.vercel.app",
+  origin: "https://job-pilot-jade.vercel.app",
+  // origin: "http://localhost:5173",
   methods: "GET, HEAD, POST, OPTIONS, PATCH, PUT , DELETE",
   credentials: true,
   optionsSuccessStatus: 204,

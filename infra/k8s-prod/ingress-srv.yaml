@@ -46,7 +46,7 @@ spec:
                 name: user-clsip-srv
                 port:
                   number: 3003
-          - path: /api/v4/chat/?(.*)
+          - path: /api/v5/chat/?(.*)
             pathType: Prefix
             backend:
               service:

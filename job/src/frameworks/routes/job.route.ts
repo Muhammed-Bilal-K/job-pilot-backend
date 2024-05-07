@@ -29,10 +29,8 @@ router.get(
     jobController.allJobApplicant(req, res, next)
 );
 
-router.get(
-  "/preferred",
-  (req: Request, res: Response, next: NextFunction) =>
-    jobController.getPreferredJobs(req, res, next)
+router.get("/preferred", (req: Request, res: Response, next: NextFunction) =>
+  jobController.getPreferredJobs(req, res, next)
 );
 
 router.get(

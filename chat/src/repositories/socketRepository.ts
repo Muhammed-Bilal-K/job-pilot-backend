@@ -19,8 +19,10 @@ class SocketIORepository {
     this.httpServer = httpServer;
     this.io = new Server(httpServer, {
       cors: {
-        origin: "https://job-pilot-frontend.vercel.app",
+        origin: "https://job-pilot-jade.vercel.app",
+        // origin: "http://localhost:5173",
       },
+      
     });
     this.users;
     this.messageRepository = new MessageRepository();
