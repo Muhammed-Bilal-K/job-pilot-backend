@@ -24,3 +24,8 @@ jobs:
          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
      - name: Push Docker Image
        run: docker push mhdbilal/jobpilot-chat
+     - uses: digitalocean/action-doctl@v2
+       with:
+        token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+     - run: doctl kubernetes cluster kubeconfig save 8d2b60e0-8538-434c-bb80-15c84f7652f5
+     - run: kubectl rollout restart deployment chat-depl
