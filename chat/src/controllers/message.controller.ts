@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import IMessageUsecase from "../interfaces/usecase/message.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
+import { StatusCode } from "../enums/chat";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -14,7 +15,7 @@ class MessageController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
       const message = await this.messageUsecase.create(req.body);
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         message: message,
       });
     } catch (error: unknown) {
@@ -28,7 +29,7 @@ class MessageController {
   public async getConvo(req: Request, res: Response, next: NextFunction) {
     try {
       const convo = await this.messageUsecase.getConvo(req.params.id);
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         convo: convo,
       });
     } catch (error: unknown) {

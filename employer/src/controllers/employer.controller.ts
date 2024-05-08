@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import IEmployerUsecase from "../interfaces/usecase/employer.usecase";
 import IStripeUsecase from "../interfaces/usecase/stripe.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
+import { StatusCode } from "../enums/employer";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -22,7 +23,7 @@ class EmployerController {
     try {
       const employer = await this.employerUsecase.saveData(req.body);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Company Data saved successfully.",
       });
@@ -42,7 +43,7 @@ class EmployerController {
     try {
       const employer = await this.employerUsecase.updateEmploInfoData(req.body);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Company Data saved successfully.",
         companyInfo: employer,
@@ -59,7 +60,7 @@ class EmployerController {
     try {
       const employer = await this.employerUsecase.allAuthInfo();
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Company Data saved successfully.",
         AuthInfo: employer,
@@ -82,7 +83,7 @@ class EmployerController {
 
       const employer = await this.employerUsecase.allEmployerInfo(selectedIndustries,currentPage);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Company Data listed successfully.",
         AllEmployers: employer.company,
@@ -99,7 +100,7 @@ class EmployerController {
   public async subscription(req: Request, res: Response, next: NextFunction) {
     try {
       const plans = await this.stripeUsecase.createPlans(req.body);
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         message: "done",
         url: plans,
       });
@@ -115,7 +116,7 @@ class EmployerController {
     try {
       const { id } = req.params;
       const emplo = await this.employerUsecase.getCompanyInfo(id);
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         message: "done",
         Company: emplo,
       });

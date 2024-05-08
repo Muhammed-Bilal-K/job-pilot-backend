@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import IAdminAuthUsecase from "../interfaces/usecase/admin.auth.usecase";
 import { ErrorHandler } from '@validation-pilot/common';
+import { StatusCode } from "../enums/auth";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -22,7 +23,7 @@ class AdminAuthcontroller {
         secure: true,
         sameSite: "none",
       });
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Account logined successfully",
         token: admin.token,
@@ -47,7 +48,7 @@ class AdminAuthcontroller {
 
       const admin = await this.adminAuthUsecase.editSubscription(id, planData);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Plan updated successfully",
         plan: admin,
@@ -68,7 +69,7 @@ class AdminAuthcontroller {
     try {
       const admin = await this.adminAuthUsecase.createSubcriptionPlan(req.body);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         status: true,
         message: "Plan created successfully!",
       });
@@ -86,7 +87,7 @@ class AdminAuthcontroller {
 
       const admin = await this.adminAuthUsecase.doneVerify(id);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         status: true,
         message: "Plan created successfully!",
       });
@@ -104,7 +105,7 @@ class AdminAuthcontroller {
 
       const admin = await this.adminAuthUsecase.deniedVerify(id);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         status: true,
         message: "Plan created successfully!",
       });
@@ -126,7 +127,7 @@ class AdminAuthcontroller {
 
       const admin = await this.adminAuthUsecase.deleteSubcriptionPlan(id);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         status: true,
         message: "Plan deleted successfully!",
       });
@@ -144,7 +145,7 @@ class AdminAuthcontroller {
 
       const admin = await this.adminAuthUsecase.deleteUser(id);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         status: true,
         message: "User deleted successfully!",
       });
@@ -160,7 +161,7 @@ class AdminAuthcontroller {
     try {
       const admin = await this.adminAuthUsecase.getPlanDetails();
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         message: "Listed all plans succesfully!",
         planDetail: admin,
       });

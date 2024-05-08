@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import IAuthUsecase from "../interfaces/usecase/auth.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
+import { StatusCode } from "../enums/auth";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -17,7 +18,7 @@ class AuthController {
     try {
         const token = await this.authUsecase.register(req.body);
 
-        res.status(200).json({
+        res.status(StatusCode.SUCCESS).json({
           success: true,
           activationToken: token,
           message: "Otp successfully sent to your email address.",
@@ -58,7 +59,7 @@ class AuthController {
         secure: true,
         sameSite: "none",
       });
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "signed successfully",
         token: user.token,
@@ -83,7 +84,7 @@ class AuthController {
         secure: true,
         sameSite: "none",
       });
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Account logined successfully",
         token: user.token,
@@ -104,7 +105,7 @@ class AuthController {
       console.log(user, 'from UserByEmail');
       
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Email Found Successfully!",
         email: user.email,
@@ -121,7 +122,7 @@ class AuthController {
     try {
       const user = await this.authUsecase.updatePassByEmail(req.body);
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "Password Updated Successfully!"
       });
@@ -137,7 +138,7 @@ class AuthController {
     try {
       const token = await this.authUsecase.resendUserOtp(req.body);
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         activationToken: token,
         message: "Resend Otp successfully sent to your email address.",
@@ -157,7 +158,7 @@ class AuthController {
 
       const user = await this.authUsecase.currentUserData(token);
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         currentUser: user,
         message: "Current User Data fetch successfully",
@@ -175,7 +176,7 @@ class AuthController {
 
       const user = await this.authUsecase.listUsers();
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         Users: user,
         message: "Listed User Data fetch successfully",
@@ -195,7 +196,7 @@ class AuthController {
 
       const user = await this.authUsecase.blockUser(id);
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         Users: user,
         message: "Listed User Data fetch successfully",
@@ -213,7 +214,7 @@ class AuthController {
 
       const user = await this.authUsecase.listEmployers();
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         Users: user,
         message: "Listed User Data fetch successfully",
@@ -233,7 +234,7 @@ class AuthController {
 
       const user = await this.authUsecase.blockEmployer(id);
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         Users: user,
         message: "Listed User Data fetch successfully",

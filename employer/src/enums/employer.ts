@@ -3,3 +3,7 @@ export enum Role {
     CANDIDATE = "candidate"
   }
   
+  export enum StatusCode {
+    SUCCESS = 200,
+  }
+  

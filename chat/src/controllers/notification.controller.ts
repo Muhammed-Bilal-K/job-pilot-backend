@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import { Notificationusecase } from "../usecase/notification.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
+import { StatusCode } from "../enums/chat";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -22,7 +23,7 @@ export class Notificationcontoller {
       const del = await this.notifcationusecase.createNotifications(
         req.body
       );
-      res.status(200).json(del);
+      res.status(StatusCode.SUCCESS).json(del);
     } catch (error: unknown) {
       if (error) {
         const err = error as CustomError;
@@ -41,7 +42,7 @@ export class Notificationcontoller {
       const del = await this.notifcationusecase.deleteAllNotifications(
         req.body.id
       );
-      res.status(200).json(del);
+      res.status(StatusCode.SUCCESS).json(del);
     } catch (error: unknown) {
       if (error) {
         const err = error as CustomError;
@@ -73,7 +74,7 @@ export class Notificationcontoller {
       const { id } = req.params;
       
       const del = await this.notifcationusecase.getAllmessages(id);
-      res.status(200).json(del);
+      res.status(StatusCode.SUCCESS).json(del);
     } catch (error: unknown) {
       if (error) {
         const err = error as CustomError;

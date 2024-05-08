@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import IJobUsecase from "../interfaces/usecase/job.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
+import { StatusCode } from "../enums/job";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -16,7 +17,7 @@ class JobController {
     try {
       const job = await this.jobUsecase.jobCreate(req.body);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job created successfully.",
       });
@@ -49,7 +50,7 @@ class JobController {
         currentPage
       );
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job listed successfull.",
         jobs: job.jobs,
@@ -71,7 +72,7 @@ class JobController {
     try {
       const job = await this.jobUsecase.allJobApplicant();
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job listed successfull.",
         jobs: job,
@@ -90,7 +91,7 @@ class JobController {
 
       const job = await this.jobUsecase.applicant(id);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job listed successfull.",
         jobs: job,
@@ -109,7 +110,7 @@ class JobController {
 
       const job = await this.jobUsecase.authUserById(id);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job listed successfull.",
         jobs: job,
@@ -133,7 +134,7 @@ class JobController {
 
       const job = await this.jobUsecase.makeFavoriteJob(id, JobId);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job added favorite.",
       });
@@ -155,7 +156,7 @@ class JobController {
 
       const jobs = await this.jobUsecase.getPreferredJobs(preferedJobList);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job added favorite.",
         preferrefJob: jobs,
@@ -178,7 +179,7 @@ class JobController {
 
       const job = await this.jobUsecase.jobListByUser(id);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job listed successfull.",
         jobs: job,
@@ -198,7 +199,7 @@ class JobController {
 
       const job = await this.jobUsecase.jobAppliedUserDetail(id, jobId);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job listed successfull.",
         jobs: job,
@@ -222,7 +223,7 @@ class JobController {
 
       const job = await this.jobUsecase.userShortListByValid(id, jobId);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "User Shortlisted successfull.",
       });
@@ -240,7 +241,7 @@ class JobController {
 
       const job = await this.jobUsecase.comapnyJobs(email);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job listed successfull.",
         jobs: job,
@@ -257,7 +258,7 @@ class JobController {
     try {
       const job = await this.jobUsecase.jobApply(req.body);
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "job applied successfull.",
         job: job,
@@ -274,7 +275,7 @@ class JobController {
     try {
       const company = await this.jobUsecase.companyDetail();
 
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         success: true,
         message: "company details fetched successfull.",
         comInfo: company,

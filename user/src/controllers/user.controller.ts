@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import IUserUsecase from "../interfaces/usecase/usercandidate.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
+import { StatusCode } from "../enums/user";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -18,7 +19,7 @@ class UserController {
       try {
           const token = await this.userUsecase.profile(req.body);
   
-          res.status(200).json({
+          res.status(StatusCode.SUCCESS).json({
             success: true,
             activationToken: token,
             message: "profile updated successfully.",
@@ -37,7 +38,7 @@ class UserController {
   
         const user = await this.userUsecase.specificUser(id);
   
-        res.status(200).json({
+        res.status(StatusCode.SUCCESS).json({
           success: true,
           message: "user details.",
           user: user,

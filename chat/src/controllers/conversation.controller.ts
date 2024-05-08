@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import IConversationUsecase from "../interfaces/usecase/conversation.usecase";
 import { ErrorHandler } from "@validation-pilot/common";
+import { StatusCode } from "../enums/chat";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -21,7 +22,7 @@ class ConversationController {
       );
       console.log(convo , 'from data');
       
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         convo : convo
       });
     } catch (error: unknown) {
@@ -37,7 +38,7 @@ class ConversationController {
       const convo = await this.conversationUsecase.find(
         req.params.userId
       );      
-      res.status(200).json({
+      res.status(StatusCode.SUCCESS).json({
         convo : convo
       });
     } catch (error: unknown) {
