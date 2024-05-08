@@ -28,8 +28,8 @@ class StripeRepository {
           payment_method_types: ["card"],
           line_items: lineItems,
           mode: "payment",
-          success_url: "http://localhost:5173/employer/emplo-dash",
-          cancel_url: "http://localhost:5173/employer/emplo-dash/post_job",
+          success_url: "https://job-pilot-frontend.vercel.app/success",
+          cancel_url: "https://job-pilot-frontend.vercel.app/employer/emplo-dash/post_job",
           client_reference_id: companyId
         }
       );
