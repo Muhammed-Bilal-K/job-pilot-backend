@@ -2,16 +2,17 @@ import IAdminAuthRepository from "../interfaces/repository/admin.auth.repository
 import adminAuthModel from "../frameworks/models/admin.subs.model";
 import { ICreateSubscriptionRequest } from "../interfaces/admin.auth.interface";
 import AuthModel from "../frameworks/models/auth.model";
+import { Iadmin } from "../entities/auth";
 
 class AdminAuthRepository implements IAdminAuthRepository {
   constructor() {}
 
-  public async login(email: string, password: string): Promise<any> {
-    if (email != "admin@gmail.com") {
+  public async login(email: string, password: string): Promise<Iadmin> {
+    if (email != process.env.ADMIN_EMAIL) {
       throw new Error("You not authorized to access!");
     }
 
-    if (password != "admin@123") {
+    if (password != process.env.ADMIN_PASS) {
       throw new Error("Invalid password");
     }
 

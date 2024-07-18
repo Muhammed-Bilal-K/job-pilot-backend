@@ -12,7 +12,7 @@ interface IAuth{
 
 interface Iadmin{
     email:string,
-    password?:string,
+    password:string,
 }
 
 interface IVerifyCurr{

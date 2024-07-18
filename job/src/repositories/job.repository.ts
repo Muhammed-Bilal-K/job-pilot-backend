@@ -50,7 +50,7 @@ class JobRepository implements IJobRepository {
       
       let totalJobsCount;
       let sortOption: string | { [key: string]: 1 | -1 } = { createdAt: 1 };
-      const limit = 2;
+      const limit = 6;
 
       if (currentPage === 0) {
         job = await jobModel.find({}).populate("company");

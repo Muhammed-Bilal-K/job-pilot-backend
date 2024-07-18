@@ -1,7 +1,8 @@
+import { Iadmin } from "../../entities/auth";
 import { ICreateSubscriptionRequest } from "../admin.auth.interface";
 
 interface IAdminAuthRepository {
-  login(email: string, password: string): Promise<unknown>;
+  login(email: string, password: string): Promise<Iadmin>;
   createSubscription(data : ICreateSubscriptionRequest) : Promise<any>;
   getPlanDetails():Promise<any>;
   editSubscription(id : string , planData : any) : Promise<void>;

@@ -1,3 +1,4 @@
+import { Iadmin } from "../entities/auth";
 import JwtService from "../frameworks/utils/jwt";
 import { IAdminLoginRequest, ICreateSubscriptionRequest } from "../interfaces/admin.auth.interface";
 import IAdminAuthRepository from "../interfaces/repository/admin.auth.repository";

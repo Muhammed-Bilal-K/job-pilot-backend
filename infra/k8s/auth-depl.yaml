@@ -51,6 +51,16 @@ spec:
                 secretKeyRef:
                   name: smtp-pass
                   key: SMTP_PASS
+            - name: ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: admin-email
+                  key: ADMIN_EMAIL
+            - name: ADMIN_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: admin-pass
+                  key: ADMIN_PASS      
 ---
 apiVersion: v1
 kind: Service

@@ -87,7 +87,7 @@ class EmployerRepository implements IEmployerRepository {
       let company;
       let currentPage = parseInt(currPage);
       let totalEmployerCount;
-      const limit = 1;
+      const limit = 6;
 
       if (selectedIndustries) {
         const industryQuery =
