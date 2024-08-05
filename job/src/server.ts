@@ -12,5 +12,5 @@ connectDb();
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(`Server running ${PORT} | Job`);
-  console.log('..started job after 3002');
+  console.log(`Job started....`);
 });
