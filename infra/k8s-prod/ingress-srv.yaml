@@ -11,7 +11,7 @@ spec:
   tls:
     - hosts:
         - www.recardo.store
-      secretName: recardo-store-tls
+      secretName: recardo-store-tls-249lj
   rules:
     - host: www.recardo.store
       http:

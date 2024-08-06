@@ -16,34 +16,33 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 
 // List of allowed origins
-const allowedOrigins: string[] = [
-  "http://localhost:5173",
-  "https://job-pilot-frontend.vercel.app",
-];
+// const allowedOrigins: string[] = [
+//   "http://localhost:5173",
+//   "https://job-pilot-frontend.vercel.app",
+// ];
 
-const corsOptions: CorsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: "GET, HEAD, POST, OPTIONS, PATCH, PUT, DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
-
-// const corsOptions = {
-//   origin: "http://localhost:5173",
-//   // origin: "https://job-pilot-frontend.vercel.app",
-//   methods: "GET, HEAD, POST, OPTIONS, PATCH, PUT , DELETE",
+// const corsOptions: CorsOptions = {
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: "GET, HEAD, POST, OPTIONS, PATCH, PUT, DELETE",
 //   credentials: true,
 //   optionsSuccessStatus: 204,
 // };
+
 // app.use(cors(corsOptions));
+
+app.use(
+  cors({
+    origin: ["https://job-pilot-frontend.vercel.app", "http://localhost:5173"],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 
 app.use(express.urlencoded({ extended: false }));
 
