@@ -13,5 +13,4 @@ connectDb();
 const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => {
   console.log(`Server running ${PORT} | User`);
-  console.log(`User started....`);
 });
