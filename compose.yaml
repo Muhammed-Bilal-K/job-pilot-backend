@@ -10,7 +10,7 @@ services:
     env_file:
       - ./user/.env
     environment:
-      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotCandidate
+      MONGO_URI: 
     develop:
       watch:
         - action: sync
@@ -31,11 +31,11 @@ services:
       - ./auth/.env
     environment:
       ACTIVE_SECRET: jobpilot@123$$
-      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotUser
-      SMTP_HOST: smtp.gmail.com
-      SMTP_PORT: "587"
+      MONGO_URI: 
+      SMTP_HOST: 
+      SMTP_PORT: ""
       SMTP_SERVICE: Gmail
-      SMTP_MAIL: bilalcr7juv@gmail.com
+      SMTP_MAIL:
     develop:
       watch:
         - action: sync
@@ -55,7 +55,7 @@ services:
     env_file:
       - ./employer/.env
     environment:
-      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotEmployer
+      MONGO_URI: 
     develop:
       watch:
         - action: sync
@@ -75,7 +75,7 @@ services:
     env_file:
       - ./job/.env
     environment:
-      MONGO_URI: mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotJob
+      MONGO_URI: 
       AWS_BUCKET_NAME: jobpilotbucket
       AWS_BUCKET_REGION: ap-south-1
     develop:
@@ -97,7 +97,7 @@ services:
     env_file:
       - ./chat/.env
     environment:
-      MONGO_URI: "mongodb+srv://muhammedbilalbinabdhulsaleem:sKBSlM77OcmIfCL3@jobpilot.wmi0pa5.mongodb.net/jobpilotChat"
+      MONGO_URI: ""
     develop:
       watch:
         - action: sync
